@@ -1,3 +1,4 @@
+@import url("https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -156,6 +157,7 @@ body {
   margin: 24px auto;
   overflow: hidden;
   color: var(--rewards-foreground);
+  font-family: "Satoshi", "Helvetica Neue", Arial, sans-serif;
   background: #fff;
   border-radius: 20px;
   box-shadow: 0 14px 38px rgb(13 23 17 / 12%);
