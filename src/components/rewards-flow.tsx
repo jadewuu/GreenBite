@@ -24,7 +24,7 @@ export function RewardsFlow() {
           />
         )
       case "verification":
-        return <VerificationScreen phone={phone} onBack={() => setScreen("login")} onVerified={() => setScreen("success")} />
+        return <VerificationScreen phone={phone} onBack={() => setScreen("login")} onResend={() => toast("Verification code resent.")} onVerified={() => setScreen("success")} />
       case "success":
         return (
           <SuccessScreen

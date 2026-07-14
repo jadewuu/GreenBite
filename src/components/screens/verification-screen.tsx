@@ -12,10 +12,11 @@ const emptyDigits = ["", "", "", "", "", ""]
 export type VerificationScreenProps = {
   phone: string
   onBack: () => void
+  onResend: () => void
   onVerified: () => void
 }
 
-export function VerificationScreen({ phone, onBack, onVerified }: VerificationScreenProps) {
+export function VerificationScreen({ phone, onBack, onResend, onVerified }: VerificationScreenProps) {
   const [digits, setDigits] = useState(emptyDigits)
   const [error, setError] = useState("")
   const [resendSeconds, setResendSeconds] = useState(31)
@@ -63,6 +64,7 @@ export function VerificationScreen({ phone, onBack, onVerified }: VerificationSc
     setError("")
     setResendSeconds(31)
     clearCode()
+    onResend()
   }
 
   return (
