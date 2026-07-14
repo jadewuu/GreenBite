@@ -19,7 +19,7 @@ export function SuccessScreen({ onViewRewards, onAddToWallet }: SuccessScreenPro
 
       <div className="success-content">
         <img className="success-badge" src={assets.badge} alt="" aria-hidden="true" />
-        <h1 className="screen-title">You earned<br />28 points</h1>
+        <h1 className="screen-title">You earned <br />28 points</h1>
         <p className="screen-copy success-copy">Your visit has been added to your rewards account</p>
 
         <div className="screen-actions success-actions">

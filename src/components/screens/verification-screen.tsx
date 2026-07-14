@@ -33,7 +33,7 @@ export function VerificationScreen({ phone, onBack, onVerified }: VerificationSc
 
   function clearCode() {
     setDigits(emptyDigits)
-    window.requestAnimationFrame(() => inputs.current[0]?.focus())
+    inputs.current[0]?.focus()
   }
 
   function handleChange(index: number, value: string) {

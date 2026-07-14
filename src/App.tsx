@@ -1,5 +1,5 @@
-function App() {
-  return null
-}
+import { RewardsFlow } from "./components/rewards-flow"
 
-export default App
+export default function App() {
+  return <RewardsFlow />
+}
