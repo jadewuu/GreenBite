@@ -1,6 +1,7 @@
-import { HashRouter, Route } from "react-router-dom"
+import { HashRouter, Route, useNavigate } from "react-router-dom"
 
 import { AuthRoutes } from "./features/auth/auth-routes"
+import { MemberCodePage } from "./features/rewards/member-code-page"
 
 function RoutePlaceholder({ title }: { title: string }) {
   return (
@@ -10,11 +11,17 @@ function RoutePlaceholder({ title }: { title: string }) {
   )
 }
 
+function MemberCodeRoute() {
+  const navigate = useNavigate()
+
+  return <MemberCodePage onClose={() => navigate("/rewards")} />
+}
+
 export function AppRouter() {
   return (
     <HashRouter>
       <AuthRoutes>
-        <Route path="/member-code" element={<RoutePlaceholder title="Member Code" />} />
+        <Route path="/member-code" element={<MemberCodeRoute />} />
         <Route path="/points" element={<RoutePlaceholder title="Points" />} />
         <Route path="/coupons" element={<RoutePlaceholder title="Coupons" />} />
         <Route path="/account" element={<RoutePlaceholder title="Account" />} />

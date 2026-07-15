@@ -6,6 +6,7 @@ import { LandingScreen } from "@/components/screens/landing-screen"
 import { LoginScreen } from "@/components/screens/login-screen"
 import { SuccessScreen } from "@/components/screens/success-screen"
 import { VerificationScreen } from "@/components/screens/verification-screen"
+import { RewardsPage } from "@/features/rewards/rewards-page"
 
 type PhoneState = { phone?: string }
 
@@ -80,9 +81,14 @@ function SuccessRoute() {
 }
 
 function RewardsPlaceholder() {
+  const navigate = useNavigate()
+
   return (
-    <main>
-      <h1>Rewards &amp; Coupon</h1>
-    </main>
+    <RewardsPage
+      onOpenAccount={() => navigate("/account")}
+      onOpenCoupons={() => navigate("/coupons")}
+      onOpenMemberCode={() => navigate("/member-code")}
+      onOpenPoints={() => navigate("/points")}
+    />
   )
 }
