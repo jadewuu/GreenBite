@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 
+import profileArrowLeft from "@/assets/figma/icon-arrow-left.svg"
 import { memberApi } from "@/lib/api/member-api"
 import type { Member } from "@/lib/api/types"
 
@@ -32,9 +33,9 @@ export function LanguagePage({ onBack }: LanguagePageProps) {
   }
 
   return (
-    <main className="detail-screen language-screen">
-      <header className="detail-header">
-        <button aria-label="Back" onClick={onBack} type="button">←</button>
+    <main className="detail-screen language-screen figma-language-screen">
+      <header className="detail-header figma-detail-header">
+        <button aria-label="Back" onClick={onBack} type="button"><img alt="" src={profileArrowLeft} /></button>
         <h1>Language</h1>
         <span aria-hidden="true" />
       </header>

@@ -1,0 +1,295 @@
+.app-stage {
+  min-height: 100dvh;
+}
+
+.app-canvas {
+  width: min(100%, 402px);
+  min-height: 100dvh;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #fff;
+}
+
+.figma-auth {
+  min-height: 874px;
+  font-family: "Satoshi", "Helvetica Neue", Arial, sans-serif;
+}
+
+.figma-auth .rewards-button {
+  width: 362px;
+  height: 48px;
+  padding: 12px 32px;
+  border-radius: 9999px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: .2px;
+}
+
+.figma-auth .rewards-button-primary {
+  color: #e9efcd;
+  background: #060a08;
+}
+
+.figma-auth .rewards-button-outline {
+  color: #0d1711;
+  border: 1px solid #d1d1d1;
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+}
+
+.figma-auth .screen-copy,
+.figma-auth .screen-note,
+.figma-auth .login-terms {
+  font-family: inherit;
+}
+
+.figma-landing .landing-hero {
+  top: 27px;
+  left: 37px;
+  width: 365px;
+  height: 440px;
+}
+
+.figma-landing .landing-hero::after {
+  display: none;
+}
+
+.figma-landing .landing-hero img {
+  inset: 0;
+  width: 365px;
+  height: 440px;
+  object-fit: cover;
+}
+
+.figma-landing .landing-content {
+  display: block;
+  padding: 0;
+}
+
+.figma-landing .landing-logo {
+  position: absolute;
+  top: 32px;
+  left: 20px;
+  display: flex;
+  width: 156px;
+  height: 32px;
+  align-items: center;
+  gap: 12px;
+}
+
+.figma-landing .landing-logo img:first-child { width: 35px; height: 32px; }
+.figma-landing .landing-logo img:last-child { width: 109px; height: 16px; }
+
+.figma-landing .landing-content h1 {
+  position: absolute;
+  top: 96px;
+  left: 20px;
+}
+
+.figma-landing .landing-copy {
+  position: absolute;
+  top: 336px;
+  left: 20px;
+}
+
+.figma-landing .benefits {
+  position: absolute;
+  top: 408px;
+  left: 20px;
+  width: 362px;
+  height: 169px;
+  gap: 16px;
+  padding: 24px 0;
+}
+
+.figma-landing .benefit { height: 44px; }
+.figma-landing .benefit-divider { flex: none; }
+
+.figma-landing .landing-actions {
+  position: absolute;
+  top: 609px;
+  left: 20px;
+  width: 362px;
+  gap: 16px;
+}
+
+.figma-landing .screen-note { margin-top: 0; }
+
+.figma-login .screen-back-row,
+.figma-verification .screen-back-row {
+  position: absolute;
+  top: 32px;
+  left: 20px;
+  width: 34px;
+  height: 44px;
+}
+
+.figma-login .back-button,
+.figma-verification .back-button {
+  width: 34px;
+  height: 44px;
+  padding: 10px 10px 10px 0;
+  border-radius: 24px;
+  background: transparent;
+}
+
+.figma-login .back-button:hover,
+.figma-verification .back-button:hover { background: transparent; }
+
+.figma-login .brand,
+.figma-verification .brand {
+  position: absolute;
+  top: 108px;
+  left: 50%;
+  width: 135px;
+  height: 80px;
+  margin: 0;
+  transform: translateX(-50%);
+}
+
+.figma-login .brand img:first-child,
+.figma-verification .brand img:first-child { width: 53px; height: 48px; }
+.figma-login .brand img:last-child,
+.figma-verification .brand img:last-child { width: 135px; height: 20px; }
+
+.figma-login .screen-title,
+.figma-verification .screen-title {
+  position: absolute;
+  top: 220px;
+  left: 50%;
+  margin: 0;
+  transform: translateX(-50%);
+}
+
+.figma-login .phone-input-wrap {
+  position: absolute;
+  top: 324px;
+  left: 20px;
+  width: 362px;
+  height: 56px;
+  border: 1px solid #d1d1d1;
+  box-shadow: 0 0 0 3px #d1d1d1;
+}
+
+.figma-login > .rewards-button {
+  position: absolute;
+  top: 412px;
+  left: 20px;
+}
+
+.figma-login .login-terms {
+  position: absolute;
+  top: 794px;
+  left: 20px;
+  width: 362px;
+}
+
+.figma-verification .verification-copy {
+  position: absolute;
+  top: 288px;
+  left: 66px;
+  width: 270px;
+}
+
+.figma-verification .otp-inputs {
+  position: absolute;
+  top: 360px;
+  left: 37px;
+  gap: 8px;
+}
+
+.figma-verification .otp-input {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+}
+
+.figma-verification .otp-input:focus-visible {
+  border-color: #8e8e8e;
+  box-shadow: 0 0 0 3px #d1d1d1;
+}
+
+.figma-verification .otp-error {
+  position: absolute;
+  top: 416px;
+  left: 20px;
+  width: 362px;
+  margin: 0 !important;
+}
+
+.figma-verification .resend-button {
+  position: absolute;
+  top: 440px;
+  left: 139px;
+  width: 124px;
+  height: 60px;
+  margin: 0;
+}
+
+.figma-success .success-confetti {
+  top: 0;
+  width: 151px;
+  height: 148px;
+}
+
+.figma-success .success-content {
+  display: block;
+  padding: 0;
+}
+
+.figma-success .success-badge {
+  position: absolute;
+  top: 83px;
+  left: 161px;
+}
+
+.figma-success .screen-title {
+  position: absolute;
+  top: 195px;
+  left: 120px;
+  width: 162px;
+}
+
+.figma-success .success-purchase {
+  position: absolute;
+  top: 299px;
+  left: 109px;
+  width: 184px;
+  text-align: center;
+}
+
+.figma-success .success-copy {
+  position: absolute;
+  top: 351px;
+  left: 109px;
+  width: 184px;
+  text-align: center;
+}
+
+.figma-success .success-actions {
+  position: absolute;
+  top: 423px;
+  left: 20px;
+  width: 362px;
+  gap: 16px;
+}
+
+@media (min-width: 403px) {
+  .app-stage {
+    display: flex;
+    justify-content: center;
+    min-height: 100dvh;
+    padding: 0;
+  }
+
+  .app-canvas {
+    min-height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 374px) {
+  .figma-verification .otp-input { width: calc((100vw - 74px) / 6); }
+}

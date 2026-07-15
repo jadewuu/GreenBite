@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { ChevronRight, CircleUserRound, QrCode } from "lucide-react"
 
 import { couponsApi } from "@/lib/api/coupons-api"
 import { memberApi } from "@/lib/api/member-api"
@@ -9,6 +8,14 @@ import type { Coupon, Member, PointActivity, RewardsOverview } from "@/lib/api/t
 import { CouponCard } from "./coupon-card"
 import { MemberCodePage } from "./member-code-page"
 import { RewardTabs } from "./reward-tabs"
+import "@/styles/rewards-figma.css"
+import logoMark from "@/assets/figma/rewards-logo-mark.svg"
+import logoWordmark from "@/assets/figma/rewards-logo-wordmark.svg"
+import profileIcon from "@/assets/figma/rewards-profile.svg"
+import qrIcon from "@/assets/figma/rewards-qr.svg"
+import panelMark from "@/assets/figma/rewards-panel-mark.svg"
+import chevronIcon from "@/assets/figma/rewards-chevron.svg"
+import emptyIllustration from "@/assets/figma/rewards-empty.png"
 
 type RewardsPageProps = {
   onOpenAccount?: () => void
@@ -22,7 +29,7 @@ export function RewardsPage({ onOpenAccount, onOpenCoupons, onOpenMemberCode, on
   const [overview, setOverview] = useState<RewardsOverview | null>(null)
   const [activities, setActivities] = useState<PointActivity[]>([])
   const [coupons, setCoupons] = useState<Coupon[]>([])
-  const [tab, setTab] = useState<"points" | "coupons">("points")
+  const [tab, setTab] = useState<"points" | "coupons">("coupons")
   const [showMemberCode, setShowMemberCode] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
@@ -50,15 +57,12 @@ export function RewardsPage({ onOpenAccount, onOpenCoupons, onOpenMemberCode, on
   if (overview.state === "empty") {
     return (
       <main className="rewards-screen rewards-empty-state">
-        <header className="rewards-header">
-          <h1>Rewards &amp; Coupon</h1>
-          <button aria-label="Open account" onClick={onOpenAccount} type="button"><CircleUserRound aria-hidden="true" size={24} /></button>
-        </header>
-        <section>
-          <div className="empty-reward-mark">✦</div>
+        <RewardsTopbar onOpenAccount={onOpenAccount} />
+        <MemberSummary member={member} overview={overview} onMemberCode={onOpenMemberCode ?? (() => setShowMemberCode(true))} onPoints={onOpenPoints} />
+        <section className="rewards-empty-content">
+          <img alt="" src={emptyIllustration} />
           <h2>No Rewards &amp; Coupon</h2>
-          <p>New rewards and coupons will appear here when they are available.</p>
-          <button className="empty-rewards-return" onClick={() => void rewardsApi.setRewardsState("available").then(setOverview)} type="button">Show rewards</button>
+          <button aria-label="Show empty rewards" className="empty-state-trigger" onClick={() => void rewardsApi.setRewardsState("available").then(setOverview)} type="button">Show empty rewards</button>
         </section>
       </main>
     )
@@ -68,34 +72,11 @@ export function RewardsPage({ onOpenAccount, onOpenCoupons, onOpenMemberCode, on
 
   return (
     <main className={`rewards-screen rewards-home ${isScrolled ? "rewards-home-scrolled" : ""}`}>
-      <header className="rewards-header">
-        <h1>Rewards &amp; Coupon</h1>
-        <button aria-label="Open account" onClick={onOpenAccount} type="button"><CircleUserRound aria-hidden="true" size={24} /></button>
-      </header>
-
-      <section className="member-summary" aria-label="Member rewards summary">
-        <p>WELCOME BACK</p>
-        <h2>{member.firstName}</h2>
-        <button aria-label="Show Member Code" className="member-code-entry" onClick={openMemberCode} type="button">
-          <QrCode aria-hidden="true" size={20} />
-          <span>Member ID · {member.memberId}</span>
-          <ChevronRight aria-hidden="true" size={18} />
-        </button>
-        <button className="points-link" onClick={onOpenPoints} type="button">
-          <strong>{overview.points.toLocaleString("en-US")}</strong>
-          <span>points</span>
-          <ChevronRight aria-hidden="true" size={18} />
-        </button>
-      </section>
-
+      {!isScrolled && <><RewardsTopbar onOpenAccount={onOpenAccount} /><MemberSummary member={member} overview={overview} onMemberCode={openMemberCode} onPoints={onOpenPoints} /><h1 className="rewards-section-title">Rewards &amp; Coupon</h1></>}
       <RewardTabs activeTab={tab} onChange={setTab} />
       <div className="rewards-list" onScroll={(event) => setIsScrolled(event.currentTarget.scrollTop > 0)}>
         {tab === "points" ? (
           <section className="points-list" aria-label="Points activity">
-            <div className="points-list-heading">
-              <p className="coupon-eyebrow">POINTS ACTIVITY</p>
-              <h2>Every fresh bite adds up.</h2>
-            </div>
             {activities.map((activity) => (
               <div className="points-activity" key={activity.id}>
                 <div>
@@ -119,5 +100,27 @@ export function RewardsPage({ onOpenAccount, onOpenCoupons, onOpenMemberCode, on
         )}
       </div>
     </main>
+  )
+}
+
+function RewardsTopbar({ onOpenAccount }: Pick<RewardsPageProps, "onOpenAccount">) {
+  return (
+    <header className="rewards-topbar">
+      <div className="rewards-logo" aria-label="GreenBite"><img alt="" src={logoMark} /><img alt="GreenBite" src={logoWordmark} /></div>
+      <button aria-label="Open account" onClick={onOpenAccount} type="button"><img alt="" src={profileIcon} /></button>
+    </header>
+  )
+}
+
+function MemberSummary({ member, overview, onMemberCode, onPoints }: { member: Member; overview: RewardsOverview; onMemberCode: () => void; onPoints?: () => void }) {
+  return (
+    <section className="member-summary" aria-label="Member rewards summary">
+      <button aria-label="Show Member Code" className="member-code-entry" onClick={onMemberCode} type="button"><span>Show Member Code</span><img alt="" src={qrIcon} /></button>
+      <div className="member-panel">
+        <img alt="" className="member-panel-mark" src={panelMark} />
+        <div><h2>{member.firstName} {member.lastName.charAt(0)}.</h2><p>Member ID</p><strong>{member.memberId}</strong></div>
+        <button aria-label={`${overview.points.toLocaleString("en-US")} points`} className="points-link" onClick={onPoints} type="button"><span>Points <img alt="" src={chevronIcon} /></span><strong>{overview.points.toLocaleString("en-US")}</strong></button>
+      </div>
+    </section>
   )
 }

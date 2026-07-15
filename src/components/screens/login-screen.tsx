@@ -1,11 +1,14 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import arrow from "@/assets/figma/auth-arrow.svg"
+import mark from "@/assets/figma/auth-mark.svg"
+import wordmark from "@/assets/figma/auth-wordmark.svg"
 import { digitsOnly, formatUsPhoneNumber, isUsPhoneNumber } from "@/lib/phone"
 
 const assets = {
-  arrow: "https://www.figma.com/api/mcp/asset/f5e3ea15-2c28-460e-acd9-87890ea72098",
-  mark: "https://www.figma.com/api/mcp/asset/b88701d5-212a-45d3-9f14-1b3a2e7d2fd4",
-  wordmark: "https://www.figma.com/api/mcp/asset/1bd96a6b-d08e-4caa-a8e2-710d3e3f40d8",
+  arrow,
+  mark,
+  wordmark,
 }
 
 export type LoginScreenProps = {
@@ -19,7 +22,7 @@ export function LoginScreen({ phone, onPhoneChange, onBack, onContinue }: LoginS
   const isValid = isUsPhoneNumber(phone)
 
   return (
-    <main className="rewards-screen rewards-centered-screen">
+    <main className="rewards-screen figma-auth figma-login">
       <header className="screen-back-row">
         <Button className="back-button" variant="ghost" size="icon" onClick={onBack} aria-label="Go back">
           <img src={assets.arrow} alt="" aria-hidden="true" />
@@ -36,7 +39,7 @@ export function LoginScreen({ phone, onPhoneChange, onBack, onContinue }: LoginS
           inputMode="tel"
           value={formatUsPhoneNumber(phone)}
           onChange={(event) => onPhoneChange(digitsOnly(event.target.value))}
-          placeholder="Phone number"
+          placeholder="(408) 888-8888"
         />
       </label>
 

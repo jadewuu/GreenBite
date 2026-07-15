@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react"
-import { ChevronRight, CircleDollarSign, Globe2, Pencil, TicketPercent } from "lucide-react"
+import { ChevronRight, CircleDollarSign, Globe2, TicketPercent } from "lucide-react"
 
+import profileArrowLeft from "@/assets/figma/icon-arrow-left.svg"
+import profileEdit from "@/assets/figma/icon-profile-edit.svg"
+import profileAndrew from "@/assets/figma/profile-andrew.png"
 import { memberApi } from "@/lib/api/member-api"
 import type { Member } from "@/lib/api/types"
+import "@/styles/profile-figma.css"
 
 type AccountPageProps = {
   onBack: () => void
@@ -41,21 +45,21 @@ export function AccountPage({ onBack, onOpenCoupons, onOpenInformation, onOpenLa
   ]
 
   return (
-    <main className="detail-screen profile-screen">
-      <header className="detail-header">
-        <button aria-label="Back" onClick={onBack} type="button">←</button>
+    <main className="detail-screen profile-screen figma-profile-screen">
+      <header className="detail-header figma-detail-header">
+        <button aria-label="Back" onClick={onBack} type="button"><img alt="" src={profileArrowLeft} /></button>
         <h1 aria-label="Account">Profile</h1>
         <span aria-hidden="true" />
       </header>
 
       <section className="profile-member" aria-label="Member profile">
-        <div className="profile-avatar" aria-hidden="true">{member.firstName.slice(0, 1)}{member.lastName.slice(0, 1)}</div>
+        <div className="profile-avatar"><img alt="" src={profileAndrew} /></div>
         <div>
           <h2>{member.firstName} {member.lastName}</h2>
           <p>Member since {new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(new Date(`${member.joinedAt}T12:00:00`))}</p>
-          <p className="profile-email">{member.email}</p>
+          <p className="sr-only">{member.email}</p>
         </div>
-        <button aria-label="Complete information" className="profile-edit" onClick={onOpenInformation} type="button"><Pencil aria-hidden="true" size={18} /></button>
+        <button aria-label="Complete information" className="profile-edit" onClick={onOpenInformation} type="button"><img alt="" src={profileEdit} /></button>
       </section>
 
       <section className="profile-menu" aria-label="Account settings">
