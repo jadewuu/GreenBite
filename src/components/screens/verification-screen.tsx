@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import arrow from "@/assets/figma/verify-arrow.svg"
+import mark from "@/assets/figma/verify-mark.svg"
+import wordmark from "@/assets/figma/verify-wordmark.svg"
 import { formatUsPhoneNumber } from "@/lib/phone"
 
-const arrow = "https://www.figma.com/api/mcp/asset/abb2bf04-1992-47c4-8426-7b4a3f0fab3c"
-const mark = "https://www.figma.com/api/mcp/asset/58dd70bb-4dee-4fbc-99b7-12e3478f785b"
-const wordmark = "https://www.figma.com/api/mcp/asset/73d78be1-f698-48ef-9fe0-f5b320302420"
 const emptyDigits = ["", "", "", "", "", ""]
 
 export type VerificationScreenProps = {
@@ -68,7 +68,7 @@ export function VerificationScreen({ phone, onBack, onResend, onVerified }: Veri
   }
 
   return (
-    <main className="rewards-screen rewards-centered-screen verification-screen">
+    <main className="rewards-screen figma-auth figma-verification verification-screen">
       <header className="screen-back-row">
         <Button className="back-button" variant="ghost" size="icon" onClick={onBack} aria-label="Go back">
           <img src={arrow} alt="" aria-hidden="true" />

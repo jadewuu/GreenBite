@@ -20,6 +20,7 @@ describe("profile routes", () => {
 
     expect(screen.getByRole("radio", { name: "Spanish" })).toBeChecked()
     expect(screen.getByRole("heading", { name: "Language" })).toBeVisible()
+    expect(screen.getByRole("heading", { name: "Language" }).closest("header")).toHaveClass("figma-detail-header")
     expect(screen.queryByRole("heading", { name: "Idioma" })).not.toBeInTheDocument()
   })
 
@@ -28,6 +29,7 @@ describe("profile routes", () => {
     render(<AppRouter />)
 
     await user.click(await screen.findByRole("button", { name: "Complete information" }))
+    expect(screen.getByRole("heading", { name: "Information" }).closest("header")).toHaveClass("figma-detail-header")
     await user.clear(await screen.findByLabelText("First name"))
     await user.clear(screen.getByLabelText("Last name"))
     await user.clear(screen.getByLabelText("Date of birth"))

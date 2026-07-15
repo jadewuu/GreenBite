@@ -1,30 +1,39 @@
 import { Button } from "@/components/ui/button"
+import gift from "@/assets/figma/landing-gift.svg"
+import hero from "@/assets/figma/landing-hero.png"
+import mark from "@/assets/figma/landing-mark.svg"
+import star from "@/assets/figma/landing-star.svg"
+import wordmark from "@/assets/figma/landing-wordmark.svg"
 
 const assets = {
-  star: "https://www.figma.com/api/mcp/asset/6d549a28-50d6-4cb2-8c64-2468def5c220",
-  hero: "https://www.figma.com/api/mcp/asset/0f8a2c53-a8cf-4244-a579-8c7d429d9d71",
-  logo: "https://www.figma.com/api/mcp/asset/3c24135e-ee06-4f17-b0c6-9c236e45fb9c",
-  gift: "https://www.figma.com/api/mcp/asset/9ef779b7-9577-462c-842e-6692e4edb867",
+  star,
+  hero,
+  mark,
+  wordmark,
+  gift,
 }
 
 export type LandingScreenProps = { onJoin: () => void }
 
 export function LandingScreen({ onJoin }: LandingScreenProps) {
   return (
-    <main className="rewards-screen rewards-landing">
+    <main className="rewards-screen figma-auth figma-landing">
       <div className="landing-hero" aria-hidden="true">
         <img src={assets.hero} alt="" />
       </div>
 
       <div className="landing-content">
-        <img className="landing-logo" src={assets.logo} alt="GreenBite" />
+        <div className="landing-logo" aria-label="GreenBite">
+          <img src={assets.mark} alt="" aria-hidden="true" />
+          <img src={assets.wordmark} alt="" aria-hidden="true" />
+        </div>
         <h1>Earn Rewards From Every Visit</h1>
         <p className="screen-copy landing-copy">Join GreenBite Rewards and start earning points today.</p>
 
         <section className="benefits" aria-label="Rewards benefits">
-          <Benefit icon={assets.star} />
+          <Benefit icon={assets.star} title="Earn points every visit" copy="1 points for every $1 you spend." />
           <div className="benefit-divider" />
-          <Benefit icon={assets.gift} />
+          <Benefit icon={assets.gift} title="Unlock free rewards" copy="Redeem points for free and drinks" />
         </section>
 
         <div className="screen-actions landing-actions">
@@ -41,15 +50,15 @@ export function LandingScreen({ onJoin }: LandingScreenProps) {
   )
 }
 
-function Benefit({ icon }: { icon: string }) {
+function Benefit({ icon, title, copy }: { icon: string; title: string; copy: string }) {
   return (
     <div className="benefit">
       <span className="benefit-icon" aria-hidden="true">
         <img src={icon} alt="" />
       </span>
       <div>
-        <h2>Earn points every visit</h2>
-        <p>1 points for every $1 you spend.</p>
+        <h2>{title}</h2>
+        <p>{copy}</p>
       </div>
     </div>
   )

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 
+import profileArrowLeft from "@/assets/figma/icon-arrow-left.svg"
 import { memberApi } from "@/lib/api/member-api"
 import type { Member, ProfileInput } from "@/lib/api/types"
 
@@ -68,9 +69,9 @@ export function InformationPage({ onBack, onContinue, onSaved, step }: Informati
   const confirmation = step === "2"
 
   return (
-    <main className="detail-screen information-screen">
-      <header className="detail-header">
-        <button aria-label="Back" onClick={onBack} type="button">←</button>
+    <main className="detail-screen information-screen figma-information-screen">
+      <header className="detail-header figma-detail-header">
+        <button aria-label="Back" onClick={onBack} type="button"><img alt="" src={profileArrowLeft} /></button>
         <h1 aria-label={confirmation ? "Confirm information" : "Information"}>Information</h1>
         <span aria-hidden="true" />
       </header>
@@ -80,7 +81,7 @@ export function InformationPage({ onBack, onContinue, onSaved, step }: Informati
           <span>Phone</span>
           <input aria-label="Phone" readOnly value="(408) 888-1234" />
         </label>
-        <p className="information-intro">{confirmation ? "Please review your personal information" : "Please complete personal information"}</p>
+        <p className="information-intro">{confirmation ? "Please review personal information" : "Please complete personal information"}</p>
         <div className="profile-name-fields">
           <label className="profile-field">
             <span>Name</span>
@@ -88,14 +89,14 @@ export function InformationPage({ onBack, onContinue, onSaved, step }: Informati
             {errors.firstName && <em>{errors.firstName}</em>}
           </label>
           <label className="profile-field profile-last-name">
-            <span className="sr-only">Last name</span>
+            <span className="figma-hidden-label">Last name</span>
             <input aria-invalid={Boolean(errors.lastName)} aria-label="Last name" disabled={confirmation} onChange={(event) => updateField("lastName", event.target.value)} value={form.lastName} />
             {errors.lastName && <em>{errors.lastName}</em>}
           </label>
         </div>
         <label className="profile-field">
           <span>Date of Birth</span>
-          <input aria-invalid={Boolean(errors.birthday)} aria-label="Date of birth" disabled={confirmation} onChange={(event) => updateField("birthday", event.target.value)} placeholder="YYYY-MM-DD" value={form.birthday} />
+          <input aria-invalid={Boolean(errors.birthday)} aria-label="Date of birth" disabled={confirmation} onChange={(event) => updateField("birthday", event.target.value)} placeholder="Month Year" value={form.birthday} />
           {errors.birthday && <em>{errors.birthday}</em>}
         </label>
         <label className="profile-field">

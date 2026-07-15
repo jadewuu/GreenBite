@@ -75,7 +75,7 @@ function SuccessRoute() {
   return (
     <SuccessScreen
       onViewRewards={() => navigate("/rewards", { state: { phone } })}
-      onAddToWallet={() => toast("Apple Wallet is not available in this demo.")}
+      onAddToWallet={() => toast("Purchase details are not available in this demo.")}
     />
   )
 }
