@@ -16,5 +16,6 @@ export default defineConfig({
     globals: true,
     passWithNoTests: true,
     setupFiles: "./src/test/setup.ts",
+    exclude: ["**/.worktrees/**", "**/node_modules/**"],
   },
 })
