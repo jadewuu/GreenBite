@@ -1,17 +1,12 @@
-import { HashRouter, Route, useNavigate } from "react-router-dom"
+import { HashRouter, Route, useNavigate, useParams } from "react-router-dom"
 
 import { AuthRoutes } from "./features/auth/auth-routes"
 import { MemberCodePage } from "./features/rewards/member-code-page"
 import { CouponsPage } from "./features/rewards/coupons-page"
 import { PointsPage } from "./features/rewards/points-page"
-
-function RoutePlaceholder({ title }: { title: string }) {
-  return (
-    <main>
-      <h1>{title}</h1>
-    </main>
-  )
-}
+import { AccountPage } from "./features/profile/account-page"
+import { InformationPage } from "./features/profile/information-page"
+import { LanguagePage } from "./features/profile/language-page"
 
 function MemberCodeRoute() {
   const navigate = useNavigate()
@@ -31,6 +26,26 @@ function CouponsRoute() {
   return <CouponsPage onBack={() => navigate("/rewards", { replace: true })} />
 }
 
+function AccountRoute() {
+  const navigate = useNavigate()
+
+  return <AccountPage onBack={() => navigate("/rewards", { replace: true })} onOpenCoupons={() => navigate("/coupons")} onOpenInformation={() => navigate("/information/1")} onOpenLanguage={() => navigate("/language")} onOpenPoints={() => navigate("/points")} onSignOut={() => navigate("/", { replace: true })} />
+}
+
+function LanguageRoute() {
+  const navigate = useNavigate()
+
+  return <LanguagePage onBack={() => navigate("/account", { replace: true })} />
+}
+
+function InformationRoute() {
+  const navigate = useNavigate()
+  const { step } = useParams()
+  const currentStep = step === "2" ? "2" : "1"
+
+  return <InformationPage onBack={() => navigate(currentStep === "2" ? "/information/1" : "/account", { replace: true })} onContinue={() => navigate("/information/2")} onSaved={() => navigate("/account", { replace: true })} step={currentStep} />
+}
+
 export function AppRouter() {
   return (
     <HashRouter>
@@ -38,9 +53,9 @@ export function AppRouter() {
         <Route path="/member-code" element={<MemberCodeRoute />} />
         <Route path="/points" element={<PointsRoute />} />
         <Route path="/coupons" element={<CouponsRoute />} />
-        <Route path="/account" element={<RoutePlaceholder title="Account" />} />
-        <Route path="/language" element={<RoutePlaceholder title="Language" />} />
-        <Route path="/information/:step" element={<RoutePlaceholder title="Complete Information" />} />
+        <Route path="/account" element={<AccountRoute />} />
+        <Route path="/language" element={<LanguageRoute />} />
+        <Route path="/information/:step" element={<InformationRoute />} />
       </AuthRoutes>
     </HashRouter>
   )
