@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import { ArrowLeft } from "lucide-react"
-
 import { rewardsApi } from "@/lib/api/rewards-api"
 import type { PointActivity } from "@/lib/api/types"
+import "@/styles/rewards-figma.css"
+import backIcon from "@/assets/figma/detail-back.svg"
 
 type PointsPageProps = {
   onBack?: () => void
@@ -49,7 +49,7 @@ export function PointsPage({ onBack = () => { window.location.hash = "/rewards" 
   return (
     <main className="detail-screen points-detail-screen">
       <header className="detail-header">
-        <button aria-label="Back" onClick={onBack} type="button"><ArrowLeft aria-hidden="true" size={24} /></button>
+        <button aria-label="Back" onClick={onBack} type="button"><img alt="" src={backIcon} /></button>
         <h1>Points</h1>
         <span aria-hidden="true" />
       </header>
@@ -61,12 +61,8 @@ export function PointsPage({ onBack = () => { window.location.hash = "/rewards" 
           <h2>{group.label}</h2>
           {group.activities.map((activity) => (
             <article className="points-detail-row" key={activity.id}>
-              <div className="points-detail-meta">
-                <span>{formatActivityDate(activity.date)}</span>
-                <span>{activity.merchant}</span>
-              </div>
-              <div className="points-detail-value">
-                <span>{activity.kind === "earned" ? "Purchase" : "Payment"}</span>
+              <div className="points-detail-meta"><span>{formatActivityDate(activity.date)}</span><span>{activity.merchant}</span></div>
+              <div className="points-detail-value"><span>{activity.kind === "earned" ? "Purchase" : "Payment"}</span>
                 <strong className={activity.points > 0 ? "points-positive" : "points-negative"}>
                   {activity.points > 0 ? "+" : ""}{activity.points}
                 </strong>

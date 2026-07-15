@@ -1,0 +1,115 @@
+.rewards-screen,
+.detail-screen {
+  box-sizing: border-box;
+  min-height: 874px;
+  color: #0d1711;
+  font-family: Satoshi, "Helvetica Neue", Arial, sans-serif;
+  background: #fff;
+}
+
+.rewards-screen *,
+.detail-screen * { box-sizing: border-box; }
+
+.rewards-screen button,
+.detail-screen button { cursor: pointer; border: 0; }
+
+.rewards-topbar {
+  display: flex;
+  height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 32px 20px 24px;
+}
+
+.rewards-logo { display: flex; align-items: center; gap: 12px; }
+.rewards-logo img:first-child { width: 35px; height: 32px; }
+.rewards-logo img:last-child { width: 109px; height: 16px; }
+.rewards-topbar button { display: grid; width: 44px; height: 44px; padding: 10px; place-items: center; background: transparent; }
+.rewards-topbar button img { width: 24px; height: 24px; }
+
+.member-summary { width: auto; height: 226px; margin: 0 20px; padding: 0; overflow: hidden; border-radius: 16px; background: #d2dd99; }
+.member-code-entry { display: flex; width: 100%; height: 36px; align-items: center; justify-content: space-between; padding: 0 14px 0 16px; color: #0d1711; background: transparent; font-size: 14px; font-weight: 700; line-height: 20px; text-align: left; }
+.member-code-entry img { width: 20px; height: 20px; }
+.member-panel { position: relative; display: flex; height: 190px; align-items: flex-end; justify-content: space-between; padding: 0 20px 46px; overflow: hidden; color: #fff; background: #10361d; }
+.member-panel-mark { position: absolute; right: -1px; bottom: -1px; width: 195px; height: 176px; opacity: .8; }
+.member-panel > div { position: relative; z-index: 1; }
+.member-panel h2 { margin: 0 0 34px; font-size: 24px; font-weight: 700; line-height: 29px; letter-spacing: -1px; }
+.member-panel p { margin: 0; font-size: 13px; font-weight: 500; line-height: 18px; letter-spacing: .3px; }
+.member-panel > div > strong { display: block; margin-top: 2px; font-size: 16px; font-weight: 500; line-height: 24px; }
+.points-link { position: relative; z-index: 1; display: flex; min-width: 68px; flex-direction: column; align-items: flex-end; padding: 0; color: #fff; background: transparent; }
+.points-link span { display: flex; align-items: center; font-size: 13px; font-weight: 500; line-height: 18px; }
+.points-link span img { width: 16px; height: 16px; margin-left: 2px; filter: brightness(0) invert(1); }
+.points-link strong { font-size: 24px; font-weight: 700; line-height: 29px; letter-spacing: -1px; }
+
+.rewards-section-title { height: 24px; margin: 24px 20px 16px; font-size: 20px; font-weight: 700; line-height: 24px; letter-spacing: -.4px; }
+.reward-tabs { display: flex; width: 100%; height: 40px; gap: 24px; padding: 0 20px; overflow-x: auto; border-bottom: 1px solid #f1f1eb; scrollbar-width: none; }
+.reward-tabs::-webkit-scrollbar { display: none; }
+.reward-tab { position: relative; flex: 0 0 auto; height: 40px; padding: 0; color: #4a524c; background: transparent; font-size: 16px; font-weight: 500; line-height: 24px; white-space: nowrap; }
+.reward-tab[aria-selected="true"] { color: #0d1711; font-weight: 700; }
+.reward-tab[aria-selected="true"]::after { position: absolute; right: 0; bottom: -1px; left: 0; height: 2px; content: ""; background: #0d1711; }
+.rewards-list { height: calc(100dvh - 446px); min-height: 428px; margin: 16px 0 0; padding: 0 20px 24px; overflow-y: auto; }
+.coupon-list { display: grid; gap: 16px; }
+.coupon-card { display: grid; width: 100%; min-height: 88px; grid-template-columns: 88px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 0; color: #0d1711; border-radius: 0; background: transparent; }
+.coupon-card-tile { display: flex; width: 88px; height: 88px; align-items: center; justify-content: center; flex-direction: column; border-radius: 8px; background: #f5f5ee; }
+.coupon-card-tile strong { font-size: 24px; font-weight: 700; line-height: 25px; letter-spacing: -1px; }
+.coupon-card-tile span { font-size: 18px; font-weight: 500; line-height: 20px; }
+.coupon-card-copy { min-width: 0; }
+.coupon-card-copy h2 { margin: 0; font-size: 16px; font-weight: 500; line-height: 24px; }
+.coupon-card-copy p { display: none; }
+.coupon-card > button { height: 32px; padding: 0 14px; color: #0d1711; border-radius: 999px; background: #e9efcd; font-size: 14px; font-weight: 700; line-height: 20px; }
+.coupon-card:nth-child(2) > button { color: #fff; background: #060a08; }
+.coupon-card.is-unavailable { opacity: .48; }
+.points-list { display: grid; gap: 16px; padding: 0; background: transparent; }
+.points-activity { display: flex; min-height: 88px; align-items: center; justify-content: space-between; padding: 0; border: 0; }
+.points-activity h3 { margin: 0; font-size: 16px; font-weight: 500; line-height: 24px; }
+.points-activity p { margin: 4px 0 0; color: #4a524c; font-size: 14px; line-height: 20px; }
+.points-activity strong { font-size: 16px; line-height: 24px; }
+.empty-state-trigger { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; clip-path: inset(50%); }
+
+.rewards-home-scrolled .reward-tabs { margin-top: 100px; }
+.rewards-home-scrolled .rewards-list { height: calc(100dvh - 156px); min-height: 718px; margin-top: 16px; }
+.rewards-empty-state .rewards-topbar { margin-bottom: 24px; }
+.rewards-empty-content { display: flex; align-items: center; flex-direction: column; padding-top: 170px; text-align: center; }
+.rewards-empty-content > img { width: 100px; height: 100px; object-fit: cover; object-position: center; }
+.rewards-empty-content h2 { margin: -20px 0 0; color: #8e8e8e; font-size: 14px; font-weight: 500; line-height: 20px; letter-spacing: .3px; }
+
+.member-code-screen { position: relative; min-height: 874px; background: #fff; }
+.member-code-header { display: grid; height: 76px; grid-template-columns: 34px 1fr 34px; align-items: center; padding: 32px 20px 0; }
+.member-code-header h1 { margin: 0; font-size: 20px; font-weight: 700; line-height: 24px; text-align: center; }
+.member-code-card { width: 370px; height: 538px; margin: 24px auto 0; overflow: hidden; border: 1px solid rgb(0 0 0 / 35%); border-radius: 24px; background: #fff; box-shadow: 0 -1px 25px rgb(0 0 0 / 15%); }
+.member-code-banner { display: flex; height: 160px; align-items: center; justify-content: center; flex-direction: column; gap: 12px; background: #d2dd99; }
+.member-code-banner img:first-child { width: 53px; height: 48px; }
+.member-code-banner img:last-child { width: 135px; height: 20px; }
+.member-code-details { display: flex; justify-content: space-between; padding: 20px 34px 0; }
+.member-code-details p { margin: 0; font-size: 13px; font-weight: 500; line-height: 18px; letter-spacing: .3px; }
+.member-code-details strong { display: block; margin-top: 0; font-size: 20px; font-weight: 700; line-height: 24px; }
+.member-code-details > div:last-child { text-align: right; }
+.member-code-details > div:last-child strong { font-size: 24px; line-height: 29px; letter-spacing: -1px; }
+.member-qr { width: 160px; height: 160px; margin: 24px auto 8px; background-image: url("../assets/figma/member-code.png"); background-position: -121px -349px; background-size: 402px 874px; }
+.member-id-code { margin: 0; font-size: 14px; font-weight: 500; line-height: 20px; text-align: center; letter-spacing: .3px; }
+.member-wallet-button { display: block; width: 300px; height: 52px; margin: 16px auto 0; padding: 0; overflow: hidden; border-radius: 12px; background-image: url("../assets/figma/member-code.png"); background-position: -51px -555px; background-size: 402px 874px; }
+.member-code-close { display: grid; width: 48px; height: 48px; margin: 40px auto 0; padding: 12px; place-items: center; border-radius: 24px; background: #f5f5ee; }
+.member-code-close img { width: 24px; height: 24px; }
+
+.detail-screen { overflow: visible; }
+.detail-header { display: grid; height: 76px; grid-template-columns: 34px 1fr 34px; align-items: center; padding: 32px 20px 0; }
+.detail-header button { display: grid; width: 34px; height: 44px; padding: 10px 0; place-items: center; background: transparent; }
+.detail-header button img { width: 24px; height: 24px; }
+.detail-header h1 { margin: 0; font-size: 20px; font-weight: 700; line-height: 24px; text-align: center; }
+.points-month h2 { height: 40px; margin: 0; padding: 8px 20px; background: #f5f5ee; font-size: 16px; font-weight: 700; line-height: 24px; }
+.points-detail-row { display: flex; height: 84px; align-items: center; justify-content: space-between; padding: 0 20px; border: 0; }
+.points-detail-meta, .points-detail-value { display: flex; flex-direction: column; gap: 2px; }
+.points-detail-meta span:first-child { font-size: 14px; font-weight: 500; line-height: 20px; }
+.points-detail-meta span:last-child, .points-detail-value span { color: #4a524c; font-size: 14px; font-weight: 500; line-height: 20px; }
+.points-detail-value { align-items: flex-end; }
+.points-detail-value strong { font-size: 16px; font-weight: 700; line-height: 24px; }
+.points-positive, .points-negative { color: #0d1711; }
+.coupon-detail-list { display: grid; gap: 16px; padding: 16px 20px 32px; }
+.coupon-detail-list .coupon-card { grid-template-columns: 88px minmax(0, 1fr); }
+.coupon-detail-list .coupon-card-copy p { display: none; }
+.detail-empty { padding: 64px 20px; color: #4a524c; text-align: center; }
+
+@media (min-width: 403px) {
+  .rewards-screen,
+  .detail-screen { width: 402px; margin-right: auto; margin-left: auto; }
+}

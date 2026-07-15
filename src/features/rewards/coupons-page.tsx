@@ -1,23 +1,12 @@
 import { useEffect, useState } from "react"
-import { ArrowLeft } from "lucide-react"
-
 import { couponsApi } from "@/lib/api/coupons-api"
 import type { Coupon } from "@/lib/api/types"
+import { CouponCard } from "./coupon-card"
+import "@/styles/rewards-figma.css"
+import backIcon from "@/assets/figma/detail-back.svg"
 
 type CouponsPageProps = {
   onBack?: () => void
-}
-
-function couponOffer(title: string) {
-  const match = title.match(/(?:\d+%|\$\d+|free|double points)/i)
-  return match ? match[0].toUpperCase() : "REWARD"
-}
-
-function couponStatus(coupon: Coupon) {
-  if (coupon.state === "expired") return "Expired"
-  if (coupon.state === "used") return "Used"
-
-  return `Expires on ${new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(new Date(`${coupon.expiresAt}T12:00:00`))}`
 }
 
 export function CouponsPage({ onBack = () => { window.location.hash = "/rewards" } }: CouponsPageProps) {
@@ -34,7 +23,7 @@ export function CouponsPage({ onBack = () => { window.location.hash = "/rewards"
   return (
     <main className="detail-screen coupons-detail-screen">
       <header className="detail-header">
-        <button aria-label="Back" onClick={onBack} type="button"><ArrowLeft aria-hidden="true" size={24} /></button>
+        <button aria-label="Back" onClick={onBack} type="button"><img alt="" src={backIcon} /></button>
         <h1>Coupon</h1>
         <span aria-hidden="true" />
       </header>
@@ -43,20 +32,7 @@ export function CouponsPage({ onBack = () => { window.location.hash = "/rewards"
         <p className="detail-empty">No coupons are available right now.</p>
       ) : (
         <section className="coupon-detail-list" aria-label="Coupons">
-          {coupons.map((coupon) => {
-            const unavailable = coupon.state !== "available"
-
-            return (
-              <article aria-label={coupon.title} className={`coupon-detail-row${unavailable ? " is-unavailable" : ""}`} key={coupon.id}>
-                <p className="coupon-detail-offer">{couponOffer(coupon.title)}</p>
-                <div>
-                  <h2>{coupon.title}</h2>
-                  <p>{couponStatus(coupon)}</p>
-                </div>
-                {coupon.state === "available" && <button type="button">Use</button>}
-              </article>
-            )
-          })}
+          {coupons.map((coupon) => <CouponCard coupon={coupon} key={coupon.id} />)}
         </section>
       )}
     </main>
