@@ -152,15 +152,13 @@ body {
 .rewards-screen {
   position: relative;
   box-sizing: border-box;
-  width: 402px;
-  min-height: 874px;
-  margin: 24px auto;
+  width: 100%;
+  min-height: 100dvh;
+  margin: 0;
   overflow: hidden;
   color: var(--rewards-foreground);
   font-family: "Satoshi", "Helvetica Neue", Arial, sans-serif;
   background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 14px 38px rgb(13 23 17 / 12%);
 }
 
 .rewards-screen h1,
@@ -962,15 +960,15 @@ body {
 }
 
 .detail-screen {
-  width: 402px;
-  min-height: 874px;
-  margin: 24px auto;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100dvh;
+  margin: 0;
   overflow: hidden;
   color: var(--rewards-foreground);
   font-family: "Satoshi", "Helvetica Neue", Arial, sans-serif;
   background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 14px 38px rgb(13 23 17 / 12%);
 }
 
 .detail-header {
@@ -1360,27 +1358,35 @@ body {
   opacity: .65;
 }
 
-@media (min-width: 403px) {
-  .rewards-screen { width: min(100%, 768px); }
-  .detail-screen { width: min(100%, 768px); }
+.app-stage {
+  min-height: 100dvh;
 }
 
-@media (max-width: 401px) {
-  body { background: #fff; }
+.app-canvas {
+  width: min(100%, 768px);
+  min-height: 100dvh;
+  margin: 0;
+  overflow: hidden;
+  background: #fff;
+}
 
-  .rewards-screen {
-    width: 100%;
-    min-height: 100dvh;
-    margin: 0;
-    border-radius: 0;
-    box-shadow: none;
+@media (max-width: 374px) {
+  .otp-input {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (min-width: 769px) {
+  .app-stage {
+    display: flex;
+    justify-content: center;
+    padding: 24px 0;
   }
 
-  .detail-screen {
-    width: 100%;
-    min-height: 100dvh;
-    margin: 0;
-    border-radius: 0;
-    box-shadow: none;
+  .app-canvas {
+    min-height: calc(100dvh - 48px);
+    border-radius: 20px;
+    box-shadow: 0 14px 38px rgb(13 23 17 / 12%);
   }
 }
