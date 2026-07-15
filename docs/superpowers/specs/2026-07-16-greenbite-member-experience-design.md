@@ -20,7 +20,7 @@ Expand the existing GreenBite frontend into every screen and interaction state i
 - Rewards header opens Account. The member-code entry opens Member Code. The points summary opens Points. Coupon entries and the coupon tab open Coupon.
 - Rewards tabs, scrolled content, alternate tab state, and the empty state are interactive local state variants.
 - Account opens Language and Complete Information. The profile form has required-field validation, advances through two steps, and updates the displayed local member record on success.
-- Language selection updates local interface language state. English is the initial demonstration language.
+- Language selection persists local language preference only. The demonstration UI remains English for every selection.
 - Member Code supports opening and closing the code view and provides local-only Add to Apple Wallet feedback. It does not create a real Wallet pass.
 
 ## Data boundaries
@@ -55,4 +55,3 @@ Expand the existing GreenBite frontend into every screen and interaction state i
 ## Non-goals
 
 - Real SMS, real account persistence, production authentication, real Wallet passes, payment processing, live coupon redemption, or a multi-column desktop dashboard.
-
