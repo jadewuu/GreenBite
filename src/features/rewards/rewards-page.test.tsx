@@ -75,6 +75,6 @@ describe("Rewards routes", () => {
     render(<AppRouter />)
     await user.click(await screen.findByRole("tab", { name: "Coupons" }))
     await user.click(screen.getByRole("button", { name: "View 20% off your next salad" }))
-    expect(await screen.findByRole("heading", { name: "Coupons" })).toBeVisible()
+    expect(await screen.findByRole("heading", { name: "Coupon" })).toBeVisible()
   })
 })
