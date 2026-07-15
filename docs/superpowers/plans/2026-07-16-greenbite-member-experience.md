@@ -13,6 +13,7 @@
 - Implement every screen and interaction state in Figma section `5:3117`.
 - Use HashRouter, local mock APIs, Figma assets, Satoshi, existing shadcn/ui primitives, and the existing Vite GitHub Pages base.
 - Mobile web is primary at 360px through 402px; tablet content expands fluidly to 768px; desktop stays centered and single-column.
+- Language selection persists local preference only; all demonstration UI copy remains English.
 - Preserve ten-digit US phone validation and fixed `123456` OTP behavior.
 - Do not introduce a backend, another UI library, real SMS, real Wallet passes, payment processing, or a multi-column desktop dashboard.
 
@@ -286,7 +287,7 @@ Expected: FAIL because profile routes do not exist.
 
 - [ ] **Step 3: Implement profile routes and validation**
 
-Render Account member summary and list rows. Language renders English, Spanish, and Chinese radio items. Information step 1 validates required name, birthday, and email fields; step 2 renders the Figma confirmation state and saves through `memberApi.updateProfile`. Provide readable field errors and Back navigation.
+Render Account member summary and list rows. Language renders English, Spanish, and Chinese radio items, persists the selection through `memberApi.setLanguage`, and keeps all UI copy in English. Information step 1 validates required name, birthday, and email fields; step 2 renders the Figma confirmation state and saves through `memberApi.updateProfile`. Provide readable field errors and Back navigation.
 
 - [ ] **Step 4: Verify and commit**
 
@@ -345,4 +346,3 @@ Expected: all tests and the production build pass; diff check has no whitespace 
 - Spec coverage: Tasks 1–6 cover HashRouter, typed mock APIs, all updated Figma pages and states, mobile/tablet/desktop width rules, local profile changes, tests, and visual validation.
 - Placeholder scan: no deferred requirement or ambiguous implementation step remains.
 - Type consistency: Task 1 owns every data type and repository signature consumed by Tasks 2–5; Task 6 only consumes existing route components.
-
