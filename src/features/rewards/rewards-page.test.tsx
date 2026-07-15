@@ -77,4 +77,30 @@ describe("Rewards routes", () => {
     await user.click(screen.getByRole("button", { name: "View 20% off your next salad" }))
     expect(await screen.findByRole("heading", { name: "Coupon" })).toBeVisible()
   })
+
+  it.each([
+    ["Points", async (user: ReturnType<typeof userEvent.setup>) => user.click(await screen.findByRole("button", { name: "1,230 points" }))],
+    ["Coupon", async (user: ReturnType<typeof userEvent.setup>) => {
+      await user.click(await screen.findByRole("tab", { name: "Coupons" }))
+      await user.click(screen.getByRole("button", { name: "View 20% off your next salad" }))
+    }],
+  ])("does not reopen %s after detail Back followed by browser Back", async (title, openDetail) => {
+    const user = userEvent.setup()
+    render(<AppRouter />)
+
+    await openDetail(user)
+    expect(await screen.findByRole("heading", { name: title })).toBeVisible()
+    await user.click(screen.getByRole("button", { name: "Back" }))
+    expect(await screen.findByRole("heading", { name: "Rewards & Coupon" })).toBeVisible()
+
+    const historyNavigation = new Promise<void>((resolve) => {
+      const done = () => resolve()
+      window.addEventListener("popstate", done, { once: true })
+      window.addEventListener("hashchange", done, { once: true })
+    })
+    await act(async () => window.history.back())
+    await historyNavigation
+
+    await waitFor(() => expect(screen.queryByRole("heading", { name: title })).not.toBeInTheDocument())
+  })
 })

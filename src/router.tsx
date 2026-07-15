@@ -22,13 +22,13 @@ function MemberCodeRoute() {
 function PointsRoute() {
   const navigate = useNavigate()
 
-  return <PointsPage onBack={() => navigate("/rewards")} />
+  return <PointsPage onBack={() => navigate("/rewards", { replace: true })} />
 }
 
 function CouponsRoute() {
   const navigate = useNavigate()
 
-  return <CouponsPage onBack={() => navigate("/rewards")} />
+  return <CouponsPage onBack={() => navigate("/rewards", { replace: true })} />
 }
 
 export function AppRouter() {
