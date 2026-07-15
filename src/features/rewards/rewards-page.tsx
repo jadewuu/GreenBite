@@ -4,7 +4,7 @@ import { ChevronRight, CircleUserRound, QrCode } from "lucide-react"
 import { couponsApi } from "@/lib/api/coupons-api"
 import { memberApi } from "@/lib/api/member-api"
 import { rewardsApi } from "@/lib/api/rewards-api"
-import type { Coupon, Member, RewardsOverview } from "@/lib/api/types"
+import type { Coupon, Member, PointActivity, RewardsOverview } from "@/lib/api/types"
 
 import { CouponCard } from "./coupon-card"
 import { MemberCodePage } from "./member-code-page"
@@ -20,15 +20,17 @@ type RewardsPageProps = {
 export function RewardsPage({ onOpenAccount, onOpenCoupons, onOpenMemberCode, onOpenPoints }: RewardsPageProps) {
   const [member, setMember] = useState<Member | null>(null)
   const [overview, setOverview] = useState<RewardsOverview | null>(null)
+  const [activities, setActivities] = useState<PointActivity[]>([])
   const [coupons, setCoupons] = useState<Coupon[]>([])
-  const [tab, setTab] = useState<"rewards" | "coupons">("rewards")
+  const [tab, setTab] = useState<"points" | "coupons">("points")
   const [showMemberCode, setShowMemberCode] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
-    void Promise.all([memberApi.getCurrent(), rewardsApi.getOverview(), couponsApi.list()]).then(([nextMember, nextOverview, nextCoupons]) => {
+    void Promise.all([memberApi.getCurrent(), rewardsApi.getOverview(), rewardsApi.getActivities(), couponsApi.list()]).then(([nextMember, nextOverview, nextActivities, nextCoupons]) => {
       setMember(nextMember)
       setOverview(nextOverview)
+      setActivities(nextActivities)
       setCoupons(nextCoupons)
     })
   }, [])
@@ -88,11 +90,23 @@ export function RewardsPage({ onOpenAccount, onOpenCoupons, onOpenMemberCode, on
 
       <RewardTabs activeTab={tab} onChange={setTab} />
       <div className="rewards-list" onScroll={(event) => setIsScrolled(event.currentTarget.scrollTop > 0)}>
-        {tab === "rewards" ? (
-          <section className="rewards-list-intro">
-            <p className="coupon-eyebrow">YOUR MEMBERSHIP</p>
-            <h2>Earn more with every fresh bite.</h2>
-            <p>Enjoy rewards, member-only offers, and points on every GreenBite visit.</p>
+        {tab === "points" ? (
+          <section className="points-list" aria-label="Points activity">
+            <div className="points-list-heading">
+              <p className="coupon-eyebrow">POINTS ACTIVITY</p>
+              <h2>Every fresh bite adds up.</h2>
+            </div>
+            {activities.map((activity) => (
+              <div className="points-activity" key={activity.id}>
+                <div>
+                  <h3>{activity.merchant}</h3>
+                  <p>{new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(new Date(`${activity.date}T12:00:00`))}</p>
+                </div>
+                <strong className={activity.kind === "earned" ? "points-earned" : "points-redeemed"}>
+                  {activity.points > 0 ? "+" : ""}{activity.points} points
+                </strong>
+              </div>
+            ))}
             <button aria-label="Show empty rewards" className="empty-state-trigger" onClick={() => void showEmptyRewards()} type="button">Show empty rewards</button>
           </section>
         ) : (

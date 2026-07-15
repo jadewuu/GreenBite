@@ -1,4 +1,4 @@
-type RewardsTab = "rewards" | "coupons"
+type RewardsTab = "points" | "coupons"
 
 type RewardTabsProps = {
   activeTab: RewardsTab
@@ -9,13 +9,13 @@ export function RewardTabs({ activeTab, onChange }: RewardTabsProps) {
   return (
     <div aria-label="Rewards sections" className="reward-tabs" role="tablist">
       <button
-        aria-selected={activeTab === "rewards"}
+        aria-selected={activeTab === "points"}
         className="reward-tab"
-        onClick={() => onChange("rewards")}
+        onClick={() => onChange("points")}
         role="tab"
         type="button"
       >
-        Rewards
+        Points
       </button>
       <button
         aria-selected={activeTab === "coupons"}

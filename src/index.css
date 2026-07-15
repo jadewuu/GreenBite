@@ -694,7 +694,8 @@ body {
   box-shadow: 0 2px 10px rgb(13 23 17 / 8%);
 }
 
-.rewards-list-intro {
+.rewards-list-intro,
+.points-list {
   display: flex;
   min-height: 292px;
   flex-direction: column;
@@ -704,7 +705,8 @@ body {
   background: #fff;
 }
 
-.rewards-list-intro h2 {
+.rewards-list-intro h2,
+.points-list-heading h2 {
   margin-top: 8px;
   font-size: 24px;
   font-weight: 700;
@@ -718,6 +720,45 @@ body {
   font-size: 14px;
   line-height: 20px;
 }
+
+.points-list {
+  min-height: 360px;
+  justify-content: flex-start;
+}
+
+.points-list-heading {
+  padding-bottom: 16px;
+}
+
+.points-activity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-top: 1px solid #e2e2e2;
+}
+
+.points-activity h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+}
+
+.points-activity p {
+  margin: 3px 0 0;
+  color: var(--rewards-copy);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.points-activity strong {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.points-earned { color: #2f6f46; }
+.points-redeemed { color: var(--rewards-foreground); }
 
 .empty-state-trigger,
 .empty-rewards-return {

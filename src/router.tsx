@@ -14,7 +14,7 @@ function RoutePlaceholder({ title }: { title: string }) {
 function MemberCodeRoute() {
   const navigate = useNavigate()
 
-  return <MemberCodePage onClose={() => navigate("/rewards")} />
+  return <MemberCodePage onClose={() => navigate("/rewards", { replace: true })} />
 }
 
 export function AppRouter() {

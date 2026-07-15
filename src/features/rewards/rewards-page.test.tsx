@@ -1,20 +1,80 @@
-import { render, screen } from "@testing-library/react"
+import { act, cleanup, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { describe, expect, it } from "vitest"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
-import { RewardsPage } from "./rewards-page"
+import { AppRouter } from "@/router"
+import { rewardsApi } from "@/lib/api/rewards-api"
 
-describe("RewardsPage", () => {
-  it("switches tabs, opens the member code, and renders the empty state", async () => {
+describe("Rewards routes", () => {
+  beforeEach(async () => {
+    await rewardsApi.setRewardsState("available")
+    window.history.replaceState(null, "", "#/rewards")
+  })
+
+  afterEach(() => {
+    cleanup()
+    vi.restoreAllMocks()
+  })
+
+  it("renders the Points activity state from the rewards API and switches to coupons", async () => {
     const user = userEvent.setup()
-    render(<RewardsPage />)
+    const getActivities = vi.spyOn(rewardsApi, "getActivities")
+    render(<AppRouter />)
 
-    await user.click(await screen.findByRole("button", { name: "Show Member Code" }))
-    expect(screen.getByRole("heading", { name: "Member Code" })).toBeVisible()
-    await user.click(screen.getByRole("button", { name: "Close member code" }))
-    await user.click(screen.getByRole("tab", { name: "Coupons" }))
+    await user.click(await screen.findByRole("tab", { name: "Coupons" }))
     expect(screen.getAllByRole("article")).toHaveLength(5)
+    await user.click(screen.getByRole("tab", { name: "Points" }))
+
+    expect((await screen.findAllByText("GreenBite Market"))[0]).toBeVisible()
+    expect(screen.getByText("+120 points")).toBeVisible()
+    expect(getActivities).toHaveBeenCalledTimes(1)
+
     await user.click(screen.getByRole("button", { name: "Show empty rewards" }))
     expect(screen.getByText("No Rewards & Coupon")).toBeVisible()
+  })
+
+  it("uses routed navigation and preserves browser Back after closing member code", async () => {
+    const user = userEvent.setup()
+    render(<AppRouter />)
+
+    await user.click(await screen.findByRole("button", { name: "Show Member Code" }))
+    expect(await screen.findByRole("heading", { name: "Member Code" })).toBeVisible()
+    expect(window.location.hash).toBe("#/member-code")
+    await user.click(screen.getByRole("button", { name: "Close member code" }))
+    expect(await screen.findByRole("heading", { name: "Rewards & Coupon" })).toBeVisible()
+
+    const historyNavigation = new Promise<void>((resolve) => {
+      const done = () => resolve()
+      window.addEventListener("popstate", done, { once: true })
+      window.addEventListener("hashchange", done, { once: true })
+    })
+    await act(async () => window.history.back())
+    await historyNavigation
+
+    await waitFor(() => expect(screen.queryByRole("heading", { name: "Member Code" })).not.toBeInTheDocument())
+    expect(screen.getByRole("heading", { name: "Rewards & Coupon" })).toBeVisible()
+  })
+
+  it("routes the account action to its addressed screen", async () => {
+    const user = userEvent.setup()
+    render(<AppRouter />)
+
+    await user.click(await screen.findByRole("button", { name: "Open account" }))
+    expect(await screen.findByRole("heading", { name: "Account" })).toBeVisible()
+  })
+
+  it("routes points and coupon actions to their addressed screens", async () => {
+    const user = userEvent.setup()
+    const { unmount } = render(<AppRouter />)
+
+    await user.click(await screen.findByRole("button", { name: "1,230 points" }))
+    expect(await screen.findByRole("heading", { name: "Points" })).toBeVisible()
+    unmount()
+
+    window.history.replaceState(null, "", "#/rewards")
+    render(<AppRouter />)
+    await user.click(await screen.findByRole("tab", { name: "Coupons" }))
+    await user.click(screen.getByRole("button", { name: "View 20% off your next salad" }))
+    expect(await screen.findByRole("heading", { name: "Coupons" })).toBeVisible()
   })
 })
