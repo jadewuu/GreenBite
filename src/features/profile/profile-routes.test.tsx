@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react"
+import { act, cleanup, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { afterEach, beforeEach, describe, expect, it } from "vitest"
 
@@ -45,5 +45,31 @@ describe("profile routes", () => {
     await user.click(screen.getByRole("button", { name: "Save information" }))
 
     expect(await screen.findByText("john@example.com")).toBeVisible()
+  })
+
+  it("does not reopen confirmation after its addressed Back followed by browser Back", async () => {
+    const user = userEvent.setup()
+    render(<AppRouter />)
+
+    await user.click(await screen.findByRole("button", { name: "Complete information" }))
+    await user.click(await screen.findByRole("button", { name: "Continue" }))
+    expect(await screen.findByRole("heading", { name: "Confirm information" })).toBeVisible()
+
+    await user.click(screen.getByRole("button", { name: "Back" }))
+    expect(await screen.findByRole("heading", { name: "Information" })).toBeVisible()
+
+    const historyNavigation = new Promise<void>((resolve) => {
+      const done = () => resolve()
+      window.addEventListener("popstate", done, { once: true })
+      window.addEventListener("hashchange", done, { once: true })
+    })
+    await act(async () => {
+      window.history.back()
+      await historyNavigation
+    })
+
+    await waitFor(() => expect(screen.queryByRole("heading", { name: "Confirm information" })).not.toBeInTheDocument())
+    expect(screen.getByRole("heading", { name: "Information" })).toBeVisible()
+    expect(window.location.hash).toBe("#/information/1")
   })
 })
