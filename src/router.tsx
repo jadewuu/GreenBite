@@ -1,4 +1,6 @@
-import { HashRouter, Route, Routes } from "react-router-dom"
+import { HashRouter, Route } from "react-router-dom"
+
+import { AuthRoutes } from "./features/auth/auth-routes"
 
 function RoutePlaceholder({ title }: { title: string }) {
   return (
@@ -11,19 +13,14 @@ function RoutePlaceholder({ title }: { title: string }) {
 export function AppRouter() {
   return (
     <HashRouter>
-      <Routes>
-        <Route path="/" element={<RoutePlaceholder title="GreenBite" />} />
-        <Route path="/login" element={<RoutePlaceholder title="Login" />} />
-        <Route path="/verify" element={<RoutePlaceholder title="Verify" />} />
-        <Route path="/success" element={<RoutePlaceholder title="Success" />} />
-        <Route path="/rewards" element={<RoutePlaceholder title="Rewards & Coupon" />} />
+      <AuthRoutes>
         <Route path="/member-code" element={<RoutePlaceholder title="Member Code" />} />
         <Route path="/points" element={<RoutePlaceholder title="Points" />} />
         <Route path="/coupons" element={<RoutePlaceholder title="Coupons" />} />
         <Route path="/account" element={<RoutePlaceholder title="Account" />} />
         <Route path="/language" element={<RoutePlaceholder title="Language" />} />
         <Route path="/information/:step" element={<RoutePlaceholder title="Complete Information" />} />
-      </Routes>
+      </AuthRoutes>
     </HashRouter>
   )
 }
