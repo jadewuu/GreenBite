@@ -22,11 +22,11 @@ describe("Rewards routes", () => {
     render(<AppRouter />)
 
     await user.click(await screen.findByRole("tab", { name: "Coupons" }))
-    expect(screen.getAllByRole("article")).toHaveLength(5)
+    expect(screen.getAllByRole("article")).toHaveLength(3)
     await user.click(screen.getByRole("tab", { name: "Points" }))
 
-    expect((await screen.findAllByText("GreenBite Market"))[0]).toBeVisible()
-    expect(screen.getByText("+120 points")).toBeVisible()
+    expect((await screen.findAllByText("HKC(RH)"))[0]).toBeVisible()
+    expect(screen.getByText("+28 points")).toBeVisible()
     expect(getActivities).toHaveBeenCalledTimes(1)
 
     await user.click(screen.getByRole("button", { name: "Show empty rewards" }))
@@ -74,7 +74,7 @@ describe("Rewards routes", () => {
     window.history.replaceState(null, "", "#/rewards")
     render(<AppRouter />)
     await user.click(await screen.findByRole("tab", { name: "Coupons" }))
-    await user.click(screen.getByRole("button", { name: "View 20% off your next salad" }))
+    await user.click(screen.getByRole("button", { name: "View Spend $20, Save $5" }))
     expect(await screen.findByRole("heading", { name: "Coupon" })).toBeVisible()
   })
 
@@ -82,7 +82,7 @@ describe("Rewards routes", () => {
     ["Points", async (user: ReturnType<typeof userEvent.setup>) => user.click(await screen.findByRole("button", { name: "1,230 points" }))],
     ["Coupon", async (user: ReturnType<typeof userEvent.setup>) => {
       await user.click(await screen.findByRole("tab", { name: "Coupons" }))
-      await user.click(screen.getByRole("button", { name: "View 20% off your next salad" }))
+      await user.click(screen.getByRole("button", { name: "View Spend $20, Save $5" }))
     }],
   ])("does not reopen %s after detail Back followed by browser Back", async (title, openDetail) => {
     const user = userEvent.setup()

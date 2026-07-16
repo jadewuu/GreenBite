@@ -7,14 +7,15 @@ export interface MemberApi {
 }
 
 let currentMember: Member = {
-  firstName: "Alex",
-  lastName: "Green",
-  memberId: "GB-2048-8891",
+  firstName: "John",
+  lastName: "Hart",
+  memberId: "GB12345678",
   points: 1230,
-  joinedAt: "2025-07-16",
+  joinedAt: "2024-11-27",
   language: "en",
   birthday: "1990-01-01",
-  email: "alex@example.com",
+  email: "john@example.com",
+  memberCode: "123456789999999999999",
 }
 
 const copyMember = () => ({ ...currentMember })

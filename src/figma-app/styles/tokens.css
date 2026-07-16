@@ -1,0 +1,149 @@
+@font-face {
+  font-family: "Satoshi";
+  src: url("../../assets/figma-clean/fonts/satoshi-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("../../assets/figma-clean/fonts/satoshi-medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("../../assets/figma-clean/fonts/satoshi-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --gb-background: #ffffff;
+  --gb-foreground: #0d1711;
+  --gb-copy: #4a524c;
+  --gb-muted: #8e8e8e;
+  --gb-primary: #060a08;
+  --gb-primary-foreground: #e9efcd;
+  --gb-secondary: #e9efcd;
+  --gb-border: #d1d1d1;
+  --gb-divider: #e2e2e2;
+  --gb-inline: 20px;
+  --gb-stack-gap: 32px;
+  --gb-hero-top: 27px;
+  --gb-hero-left: 37px;
+  --gb-hero-width: 365px;
+  --gb-hero-height: 440px;
+  --gb-landing-title-width: 244px;
+  --gb-landing-title-size: 48px;
+  --gb-landing-title-line: 52px;
+  --gb-landing-intro-width: 214px;
+  --gb-brand-inline-mark-width: 35px;
+  --gb-brand-inline-mark-height: 32px;
+  --gb-brand-inline-word-width: 109px;
+  --gb-brand-inline-word-height: 16px;
+  --gb-brand-mark-width: 53px;
+  --gb-brand-mark-height: 48px;
+  --gb-brand-word-width: 135px;
+  --gb-brand-word-height: 20px;
+  --gb-auth-title-size: 30px;
+  --gb-auth-title-line: 36px;
+  --gb-login-title-width: 204px;
+  --gb-verification-copy-width: 270px;
+  --gb-legal-padding: 35px;
+  --gb-success-padding-top: 83px;
+  --gb-success-badge: 80px;
+  --gb-success-title-width: 162px;
+  --gb-success-copy-width: 184px;
+  font-family: "Satoshi", "Helvetica Neue", Arial, sans-serif;
+  color: var(--gb-foreground);
+  background: #f4f4f1;
+  font-synthesis: none;
+  text-rendering: geometricPrecision;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
+
+body {
+  background: #f4f4f1;
+}
+
+.figma-app {
+  width: min(100%, 768px);
+  min-height: 100dvh;
+  margin: 0 auto;
+  overflow-x: hidden;
+  background: var(--gb-background);
+}
+
+.figma-frame {
+  position: relative;
+  width: 100%;
+  min-height: max(100dvh, 874px);
+  overflow: hidden;
+  background: var(--gb-background);
+}
+
+.figma-frame h1,
+.figma-frame h2,
+.figma-frame p {
+  margin: 0;
+}
+
+@media (max-width: 401px) {
+  :root {
+    --gb-inline: clamp(16px, calc(9.5238vw - 18.2857px), 20px);
+    --gb-stack-gap: clamp(28px, calc(9.5238vw - 6.2857px), 32px);
+    --gb-hero-top: clamp(24px, calc(7.1429vw - 1.7144px), 27px);
+    --gb-hero-left: clamp(33px, calc(9.5238vw - 1.2857px), 37px);
+    --gb-hero-width: clamp(327px, calc(90.4762vw + 1.2857px), 365px);
+    --gb-hero-height: clamp(394px, calc(109.5238vw - .2857px), 440px);
+    --gb-landing-title-width: clamp(219px, calc(59.5238vw + 4.7143px), 244px);
+    --gb-landing-title-size: clamp(43px, calc(11.9048vw + .1428px), 48px);
+    --gb-landing-title-line: clamp(47px, calc(11.9048vw + 4.1428px), 52px);
+    --gb-landing-intro-width: clamp(192px, calc(52.381vw + 3.4284px), 214px);
+    --gb-brand-inline-mark-width: clamp(31px, calc(9.5238vw - 3.2857px), 35px);
+    --gb-brand-inline-mark-height: clamp(29px, calc(7.1429vw + 3.2856px), 32px);
+    --gb-brand-inline-word-width: clamp(98px, calc(26.1905vw + 3.7142px), 109px);
+    --gb-brand-inline-word-height: clamp(14px, calc(4.7619vw - 3.1428px), 16px);
+    --gb-brand-mark-width: clamp(48px, calc(11.9048vw + 5.1428px), 53px);
+    --gb-brand-mark-height: clamp(43px, calc(11.9048vw + .1428px), 48px);
+    --gb-brand-word-width: clamp(121px, calc(33.3333vw + 1px), 135px);
+    --gb-brand-word-height: clamp(18px, calc(4.7619vw + .8572px), 20px);
+    --gb-auth-title-size: clamp(27px, calc(7.1429vw + 1.2856px), 30px);
+    --gb-auth-title-line: clamp(32px, calc(9.5238vw - 2.2857px), 36px);
+    --gb-login-title-width: clamp(183px, calc(50vw + 3px), 204px);
+    --gb-verification-copy-width: clamp(242px, calc(66.6667vw + 2px), 270px);
+    --gb-legal-padding: clamp(31px, calc(9.5238vw - 3.2857px), 35px);
+    --gb-success-padding-top: clamp(74px, calc(21.4286vw - 3.1429px), 83px);
+    --gb-success-badge: clamp(72px, calc(19.0476vw + 3.4286px), 80px);
+    --gb-success-title-width: clamp(145px, calc(40.4762vw - .7143px), 162px);
+    --gb-success-copy-width: clamp(165px, calc(45.2381vw + 2.1429px), 184px);
+  }
+
+  .figma-frame {
+    min-height: 100dvh;
+  }
+}

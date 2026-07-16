@@ -11,11 +11,11 @@ describe("CouponsPage", () => {
 
   afterEach(cleanup)
 
-  it("renders five coupon cards and returns with Back", async () => {
+  it("renders the three current coupon cards and returns with Back", async () => {
     const user = userEvent.setup()
     render(<CouponsPage />)
 
-    expect(await screen.findAllByRole("article")).toHaveLength(5)
+    expect(await screen.findAllByRole("article")).toHaveLength(3)
     await user.click(screen.getByRole("button", { name: "Back" }))
 
     expect(window.location.hash).toBe("#/rewards")

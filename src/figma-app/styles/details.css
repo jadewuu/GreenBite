@@ -1,0 +1,624 @@
+.detail-frame-clean {
+  height: max(100dvh, 874px);
+  min-height: 874px;
+  color: #0d1711;
+  background: #fff;
+}
+
+.detail-header-clean {
+  position: absolute;
+  z-index: 2;
+  top: 32px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 402px;
+  height: 44px;
+  padding: 0 20px;
+}
+
+.detail-header-clean h1 {
+  flex: 1;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.detail-header-clean > span,
+.detail-back-clean {
+  width: 34px;
+  height: 44px;
+  flex: 0 0 34px;
+}
+
+.detail-back-clean {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px 10px 10px 0;
+  color: inherit;
+  cursor: pointer;
+  background: transparent;
+  border-radius: 24px;
+}
+
+.detail-back-clean img {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.detail-content-clean {
+  position: absolute;
+  top: 92px;
+  left: 20px;
+  width: 362px;
+}
+
+.account-content-clean {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.account-member-clean {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 70px;
+  padding: 12px 12px 12px 0;
+}
+
+.account-member-copy-clean {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.account-member-copy-clean p {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: .1px;
+}
+
+.account-member-copy-clean span {
+  color: #4a524c;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: .3px;
+}
+
+.account-edit-clean {
+  position: relative;
+  display: grid;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  place-items: center;
+}
+
+.account-edit-clean::after {
+  position: absolute;
+  inset: -14px;
+  content: "";
+}
+
+.account-edit-clean img {
+  width: 16px;
+  height: 16px;
+}
+
+.account-menu-clean {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  flex-direction: column;
+  background: #f5f5ee;
+  border-radius: 16px;
+}
+
+.account-row-clean {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  height: 57px;
+  padding: 16px;
+  color: #0d1711;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: .2px;
+  text-align: left;
+  cursor: pointer;
+  background: transparent;
+}
+
+.account-row-clean + .account-row-clean {
+  border-top: 1px solid #e2e2e2;
+}
+
+.account-row-clean > span:nth-child(2) {
+  min-width: 0;
+  flex: 1;
+}
+
+.account-menu-icon-clean,
+.account-chevron-clean {
+  display: block;
+  flex: 0 0 auto;
+  background-image: url("../../assets/figma-clean/details/reference-account.png");
+  background-repeat: no-repeat;
+  background-size: 402px 874px;
+}
+
+.account-menu-icon-clean {
+  width: 20px;
+  height: 20px;
+}
+
+.account-menu-icon-clean.is-points { background-position: -36px -218px; }
+.account-menu-icon-clean.is-coupon { background-position: -36px -275px; }
+.account-menu-icon-clean.is-language { background-position: -36px -332px; }
+
+.account-chevron-clean {
+  width: 16px;
+  height: 16px;
+  background-position: -350px -220px;
+}
+
+.account-signout-clean {
+  position: absolute;
+  bottom: 64px;
+  left: 20px;
+  width: 362px;
+  height: 48px;
+  padding: 12px 32px;
+  color: #0d1711;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: .2px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, .1);
+  border: 1px solid #d1d1d1;
+  border-radius: 9999px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.language-list-clean {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  background: #f5f5ee;
+  border: 0;
+  border-radius: 16px;
+}
+
+.language-row-clean {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 57px;
+  padding: 16px;
+  color: #0d1711;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: .2px;
+  cursor: pointer;
+}
+
+.language-row-clean + .language-row-clean { border-top: 1px solid #e2e2e2; }
+.language-row-clean > span:first-child { min-width: 0; flex: 1; }
+
+.language-row-clean input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.language-check-clean {
+  display: none;
+  width: 16px;
+  height: 16px;
+  background: #4a524c;
+  mask: url("../../assets/figma-clean/details/check.svg") center / 14px 14px no-repeat;
+}
+
+.language-row-clean input:checked + .language-check-clean { display: block; }
+
+.points-clean {
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.points-clean::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.points-ledger-clean {
+  position: absolute;
+  top: 76px;
+  left: 0;
+  width: 402px;
+  padding-top: 16px;
+}
+
+.points-month-clean h2 {
+  height: 40px;
+  padding: 8px 20px;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: .2px;
+  background: #f5f5ee;
+}
+
+.point-row-clean {
+  display: flex;
+  width: 402px;
+  height: 84px;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f1eb;
+}
+
+.point-meta-clean,
+.point-value-clean {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.point-meta-clean {
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: .3px;
+}
+
+.point-meta-clean em {
+  min-width: 0;
+  flex: 1;
+  color: #dc2626;
+  font-style: normal;
+}
+
+.point-value-clean {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: .2px;
+}
+
+.point-value-clean strong { font-weight: 700; }
+.point-value-clean .is-pending { color: #4a524c; }
+.point-value-clean .is-positive { color: #16a34a; }
+.point-value-clean .is-negative { color: #dc2626; }
+
+.coupon-list-clean {
+  position: absolute;
+  top: 76px;
+  left: 0;
+  display: flex;
+  width: 402px;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 20px;
+}
+
+.coupon-detail-row-clean {
+  display: flex;
+  overflow: hidden;
+  width: 362px;
+  height: 206px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  border: 1px solid #f1f1eb;
+  border-radius: 16px;
+}
+
+.coupon-detail-row-clean.is-muted { opacity: .5; }
+
+.coupon-detail-row-clean:first-child { height: 258px; }
+
+.coupon-detail-open-clean {
+  display: block;
+  width: 100%;
+  height: 128px;
+  flex: 0 0 128px;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  background: #71dcd5;
+}
+
+.coupon-detail-open-clean img,
+.coupon-detail-hero-clean img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.coupon-detail-copy-clean {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  height: 78px;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 16px 12px;
+}
+
+.coupon-detail-copy-clean p {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: .2px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coupon-detail-copy-clean > span {
+  color: #4a524c;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: .3px;
+  white-space: nowrap;
+}
+
+.coupon-detail-copy-clean button {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  width: calc(100% - 32px);
+  height: 40px;
+  padding: 8px 12px;
+  color: #e9efcd;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: .3px;
+  cursor: pointer;
+  background: #060a08;
+  border-radius: 9999px;
+}
+
+.coupon-detail-row-clean:first-child .coupon-detail-copy-clean { height: 128px; }
+.coupon-detail-row-clean:first-child .coupon-detail-copy-clean p { font-size: 20px; line-height: 24px; }
+.coupon-detail-row-clean:first-child .coupon-detail-copy-clean button { bottom: 14px; }
+
+.coupon-detail-header-clean {
+  position: absolute;
+  top: 32px;
+  left: 20px;
+  display: grid;
+  width: 362px;
+  height: 44px;
+  grid-template-columns: 34px 1fr 34px;
+  align-items: center;
+}
+
+.coupon-detail-header-clean button {
+  display: grid;
+  width: 34px;
+  height: 44px;
+  padding: 10px 10px 10px 0;
+  cursor: pointer;
+  background: transparent;
+  place-items: center;
+}
+
+.coupon-detail-header-clean button img { width: 24px; height: 24px; }
+.coupon-detail-header-clean h1 { margin: 0; font-size: 20px; font-weight: 700; line-height: 24px; text-align: center; }
+
+.coupon-detail-page-content-clean { position: absolute; top: 92px; left: 20px; width: 362px; }
+.coupon-detail-hero-clean { width: 362px; height: 128px; overflow: hidden; border-radius: 16px; }
+.coupon-qr-clean { width: 160px; height: 160px; margin: 16px auto; }
+.coupon-qr-clean svg { display: block; width: 160px; height: 160px; }
+.coupon-detail-page-content-clean h2 { margin: 8px 0 8px; font-size: 24px; font-weight: 700; line-height: 29px; text-align: center; letter-spacing: -1px; }
+.coupon-detail-expiry-clean { margin: 0; color: #4a524c; font-size: 14px; font-weight: 500; line-height: 20px; text-align: center; letter-spacing: .3px; }
+.coupon-detail-page-content-clean hr { height: 1px; padding: 0; margin: 16px 0; border: 0; background: #e2e2e2; }
+.coupon-detail-page-content-clean h3 { margin: 0 0 16px; font-size: 16px; font-weight: 700; line-height: 24px; letter-spacing: .2px; }
+.coupon-detail-rule-clean { margin: 0; color: #4a524c; font-size: 14px; font-weight: 500; line-height: 20px; letter-spacing: .3px; }
+
+.information-form-clean {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.information-field-clean {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.information-field-clean > span:first-child {
+  height: 21px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: .3px;
+}
+
+.information-input-shell-clean {
+  display: flex;
+  width: 100%;
+  height: 44px;
+  min-height: 40px;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+  padding: 10px 16px;
+  background: #fff;
+  border: 1px solid #d1d1d1;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.information-input-shell-clean:focus-within {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px #d1d1d1;
+}
+
+.information-clean[data-figma-node="42:1466"] .information-input-shell-clean:focus-within {
+  border: 1px solid #d1d1d1;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.information-input-shell-clean > img {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+}
+
+.information-input-shell-clean input {
+  min-width: 0;
+  height: 24px;
+  flex: 1;
+  padding: 0;
+  color: #0d1711;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: .2px;
+  outline: 0;
+  background: transparent;
+  border: 0;
+}
+
+.information-input-shell-clean input::placeholder { color: #8e8e8e; opacity: 1; }
+.information-field-clean.is-phone .information-input-shell-clean { opacity: .5; }
+
+.information-input-shell-clean button {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  padding: 2px;
+  cursor: pointer;
+  background: transparent;
+  place-items: center;
+}
+
+.information-input-shell-clean button img { width: 16px; height: 16px; }
+
+.information-intro-clean {
+  height: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: .3px;
+  white-space: nowrap;
+}
+
+.information-name-clean {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.information-marketing-clean {
+  position: relative;
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 12px;
+  color: #4a524c;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: .3px;
+  cursor: pointer;
+}
+
+.information-marketing-clean > input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.information-checkbox-clean {
+  display: grid;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #8e8e8e;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+  place-items: center;
+}
+
+.information-marketing-clean input:checked + .information-checkbox-clean {
+  background: #060a08;
+  border-color: #060a08;
+}
+
+.information-checkbox-clean img { width: 14px; height: 14px; }
+
+.information-submit-clean {
+  width: 100%;
+  height: 48px;
+  padding: 12px 32px;
+  color: #e9efcd;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: .2px;
+  cursor: pointer;
+  background: #060a08;
+  border-radius: 9999px;
+}
+
+.information-submit-clean:disabled { cursor: default; opacity: .5; }
+
+@media (max-width: 401px) {
+  .detail-header-clean,
+  .points-ledger-clean,
+  .point-row-clean,
+  .coupon-list-clean {
+    width: 100%;
+  }
+
+  .detail-header-clean { padding-inline: var(--gb-inline); }
+  .detail-content-clean { right: var(--gb-inline); left: var(--gb-inline); width: auto; }
+  .account-signout-clean { right: var(--gb-inline); left: var(--gb-inline); width: auto; }
+  .coupon-list-clean { padding-inline: var(--gb-inline); }
+  .coupon-detail-row-clean { width: 100%; }
+  .coupon-detail-header-clean { right: var(--gb-inline); left: var(--gb-inline); width: auto; }
+  .coupon-detail-page-content-clean { right: var(--gb-inline); left: var(--gb-inline); width: auto; }
+  .coupon-detail-hero-clean { width: 100%; }
+}
