@@ -7,16 +7,17 @@
 }
 
 .detail-header-clean {
-  position: absolute;
+  position: sticky;
   z-index: 2;
-  top: 32px;
+  top: 0;
   left: 0;
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
-  height: 44px;
-  padding: 0 var(--gb-inline);
+  height: 64px;
+  padding: 20px var(--gb-inline) 0;
+  background: #fff;
 }
 
 .detail-header-clean h1 {
@@ -62,6 +63,7 @@
 }
 
 .account-content-clean {
+  top: 88px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -203,6 +205,7 @@
 }
 
 .language-list-clean {
+  top: 88px;
   display: flex;
   overflow: hidden;
   flex-direction: column;
@@ -272,7 +275,7 @@
 
 .points-ledger-clean {
   position: absolute;
-  top: 76px;
+  top: 64px;
   left: 0;
   width: 100%;
   padding-top: 16px;
@@ -335,7 +338,7 @@
 
 .coupon-list-clean {
   position: absolute;
-  top: 76px;
+  top: 64px;
   left: 0;
   display: flex;
   width: 100%;
@@ -430,15 +433,16 @@
 .coupon-detail-row-clean:first-child .coupon-detail-copy-clean button { bottom: 14px; }
 
 .coupon-detail-header-clean {
-  position: absolute;
-  top: 32px;
-  right: var(--gb-inline);
-  left: var(--gb-inline);
+  position: sticky;
+  z-index: 2;
+  top: 0;
   display: grid;
-  width: auto;
-  height: 44px;
+  width: 100%;
+  height: 64px;
   grid-template-columns: 34px 1fr 34px;
   align-items: center;
+  padding: 20px var(--gb-inline) 0;
+  background: #fff;
 }
 
 .coupon-detail-header-clean button {
@@ -454,7 +458,7 @@
 .coupon-detail-header-clean button img { width: 24px; height: 24px; }
 .coupon-detail-header-clean h1 { margin: 0; font-size: 20px; font-weight: 700; line-height: 24px; text-align: center; }
 
-.coupon-detail-page-content-clean { position: absolute; top: 92px; right: var(--gb-inline); left: var(--gb-inline); width: auto; }
+.coupon-detail-page-content-clean { position: absolute; top: 80px; right: var(--gb-inline); left: var(--gb-inline); width: auto; }
 .coupon-detail-hero-clean { width: 100%; height: 128px; overflow: hidden; border-radius: 16px; }
 .coupon-qr-clean { width: 160px; height: 160px; margin: 16px auto; }
 .coupon-qr-clean svg { display: block; width: 160px; height: 160px; }

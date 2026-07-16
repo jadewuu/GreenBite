@@ -33,7 +33,7 @@ export function MemberCode({ onClose }: { onClose: () => void }) {
 
   return (
     <main className="figma-frame member-code-clean" data-figma-node="35:38">
-      <header><span /><h1>Member Code</h1><span /></header>
+      <header><button aria-label="Close member code" className="member-close-clean" onClick={onClose} type="button"><img alt="" src={closeIcon} /></button><h1>Member Code</h1><span /></header>
       <section aria-label="GreenBite member code" className="member-card-clean">
         <div className="member-banner-clean">
           <img alt="" src={memberEmblem} /><img alt="GreenBite" src={memberWordmark} />
@@ -60,7 +60,6 @@ export function MemberCode({ onClose }: { onClose: () => void }) {
           <p aria-atomic="true" aria-live="polite" className="wallet-status-clean" role="status">{walletStatus}</p>
         </div>
       </section>
-      <button aria-label="Close member code" className="member-close-clean" onClick={onClose} type="button"><img alt="" src={closeIcon} /></button>
     </main>
   )
 }

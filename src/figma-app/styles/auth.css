@@ -9,6 +9,15 @@
   padding: var(--gb-stack-gap) var(--gb-inline);
 }
 
+.auth-frame {
+  height: var(--gb-locked-viewport-height, 100vh);
+  min-height: var(--gb-locked-viewport-height, 100vh);
+}
+
+.auth-entry-stack {
+  padding: 20px var(--gb-inline);
+}
+
 .brand-inline,
 .brand-stacked {
   display: flex;

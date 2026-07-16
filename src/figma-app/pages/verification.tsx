@@ -4,6 +4,8 @@ import arrowLeft from "@/assets/figma-clean/auth/verify-arrow-left.svg"
 import mark from "@/assets/figma-clean/auth/verify-mark.svg"
 import wordmark from "@/assets/figma-clean/auth/verify-wordmark.svg"
 
+import { useLockedViewportHeight } from "../use-locked-viewport-height"
+
 const emptyDigits = ["", "", "", "", "", ""]
 
 type VerificationProps = {
@@ -13,6 +15,7 @@ type VerificationProps = {
 }
 
 export function Verification({ formattedPhone, onBack, onVerified }: VerificationProps) {
+  const frameRef = useLockedViewportHeight<HTMLElement>()
   const [digits, setDigits] = useState(emptyDigits)
   const [error, setError] = useState("")
   const [status, setStatus] = useState("")
@@ -64,8 +67,8 @@ export function Verification({ formattedPhone, onBack, onVerified }: Verificatio
   }
 
   return (
-    <main className="figma-frame" data-figma-node="5:2678">
-      <div className="auth-stack">
+    <main ref={frameRef} className="figma-frame auth-frame" data-figma-node="5:2678">
+      <div className="auth-stack auth-entry-stack">
         <button className="auth-back" type="button" aria-label="Go back" onClick={onBack}>
           <img src={arrowLeft} alt="" />
         </button>

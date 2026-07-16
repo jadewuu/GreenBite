@@ -75,5 +75,7 @@ describe("latest Figma rewards flow", () => {
     expect(rewardsCss).toMatch(/\.how-it-works\s*\{[\s\S]*?border-radius:\s*16px/)
     expect(rewardsCss).toMatch(/\.rewards-frame\s*\{[\s\S]*?height:\s*100dvh;[\s\S]*?overflow-y:\s*auto/)
     expect(rewardsCss).toMatch(/\.rewards-header\s*\{[\s\S]*?position:\s*sticky;[\s\S]*?top:\s*32px/)
+    expect(rewardsCss).toMatch(/\.member-code-clean > header\s*\{[\s\S]*?top:\s*0;[\s\S]*?height:\s*64px/)
+    expect(rewardsCss).toMatch(/\.member-close-clean\s*\{[\s\S]*?width:\s*34px;[\s\S]*?height:\s*44px/)
   })
 })

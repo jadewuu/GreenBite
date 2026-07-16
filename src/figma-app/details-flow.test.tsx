@@ -246,7 +246,7 @@ describe("Figma clean-room detail routes", () => {
   })
 
   it("uses the Figma geometry and only local clean-room assets", () => {
-    expect(detailsCss).toMatch(/\.detail-header-clean\s*\{[\s\S]*?top:\s*32px/)
+    expect(detailsCss).toMatch(/\.detail-header-clean\s*\{[\s\S]*?position:\s*sticky;[\s\S]*?top:\s*0;[\s\S]*?height:\s*64px;[\s\S]*?background:\s*#fff/)
     expect(detailsCss).toMatch(/\.detail-content-clean\s*\{[\s\S]*?top:\s*92px;[\s\S]*?right:\s*var\(--gb-inline\);[\s\S]*?width:\s*auto/)
     expect(detailsCss).toMatch(/\.information-submit-clean\s*\{[\s\S]*?height:\s*48px;[\s\S]*?border-radius:\s*9999px/)
     expect(detailsCss).toMatch(/\.points-clean\s*\{[\s\S]*?overflow-y:\s*auto;[\s\S]*?scrollbar-width:\s*none/)

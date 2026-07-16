@@ -2,6 +2,8 @@ import arrowLeft from "@/assets/figma-clean/auth/arrow-left.svg"
 import mark from "@/assets/figma-clean/auth/auth-mark.svg"
 import wordmark from "@/assets/figma-clean/auth/auth-wordmark.svg"
 
+import { useLockedViewportHeight } from "../use-locked-viewport-height"
+
 type LoginProps = {
   canContinue: boolean
   phone: string
@@ -11,9 +13,11 @@ type LoginProps = {
 }
 
 export function Login({ canContinue, phone, onBack, onContinue, onPhoneChange }: LoginProps) {
+  const frameRef = useLockedViewportHeight<HTMLElement>()
+
   return (
-    <main className="figma-frame" data-figma-node="47:836">
-      <div className="auth-stack">
+    <main ref={frameRef} className="figma-frame auth-frame" data-figma-node="47:836">
+      <div className="auth-stack auth-entry-stack">
         <button className="auth-back" type="button" aria-label="Go back" onClick={onBack}>
           <img src={arrowLeft} alt="" />
         </button>
