@@ -78,7 +78,7 @@ function VerificationRoute() {
   const location = useLocation()
   const navigate = useNavigate()
   const phone = (location.state as PhoneLocationState | null)?.phone ?? ""
-  const verify = useCallback(() => navigate("/success", { state: { phone } }), [navigate, phone])
+  const verify = useCallback(() => navigate("/information/1", { state: { phone } }), [navigate, phone])
 
   return (
     <Verification
@@ -101,7 +101,7 @@ function FailedRoute() {
 
 function RewardsRoute() {
   const navigate = useNavigate()
-  return <Rewards onOpenAccount={() => navigate("/account")} onOpenMemberCode={() => navigate("/member-code")} onOpenPoints={() => navigate("/points")} />
+  return <Rewards onOpenAccount={() => navigate("/account")} onOpenCoupon={(couponId) => navigate(`/coupons/${couponId}`)} onOpenMemberCode={() => navigate("/member-code")} onOpenPoints={() => navigate("/points")} />
 }
 
 function MemberCodeRoute() {
@@ -161,7 +161,7 @@ function InformationRoute({ step }: { step: "1" | "2" }) {
         }
       }}
       onContinue={(nextDraft) => navigate("/information/2", { state: { draft: nextDraft } })}
-      onSaved={() => navigate("/account", { replace: true })}
+      onSaved={() => navigate("/success/instant", { replace: true })}
       step={step}
     />
   )

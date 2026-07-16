@@ -21,8 +21,8 @@ const activities: PointActivity[] = [
 ]
 
 const catalog: RewardCatalogItem[] = [
-  { id: "reward-1", title: "Dry-pot Brussels SproutsDry-pot Brussels SproutsDry-pot", points: 50, price: "$5.00", priceStruck: true },
-  { id: "reward-2", title: "Dry-pot Brussels SproutsDry-pot Brussels SproutsDry-pot", points: 50, price: "$5.00", priceStruck: true },
+  { id: "reward-1", title: "Dry-pot Brussels Sprouts", points: 50, price: "$5.00", priceStruck: true },
+  { id: "reward-2", title: "Dry-pot Brussels Sprouts", points: 50, price: "$5.00", priceStruck: true },
   { id: "reward-3", title: "Roasted Garlic Mushrooms", points: 40, price: "$4.50" },
   { id: "reward-4", title: "Spicy Buffalo Cauliflower Bites", points: 60, price: "$6.75" },
   { id: "reward-5", title: "Honey Glazed Carrot Sticks", points: 55, price: "$5.50" },

@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs"
 
-import { cleanup, render, screen } from "@testing-library/react"
+import { cleanup, fireEvent, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
@@ -99,7 +99,7 @@ describe("Figma clean-room detail routes", () => {
 
     expect(await screen.findByText("Today, 04:30 PM")).toBeVisible()
     expect(document.querySelector('[data-figma-node="42:2853"]')).toBeInTheDocument()
-    expect(screen.getByText("Pending")).toBeVisible()
+    expect(screen.getByText("PENDING")).toHaveClass("point-status-clean")
     expect(screen.getAllByText("Purchase #ORD00123456").length).toBeGreaterThan(1)
     expect(screen.getAllByText("Payment #ORD00123456").length).toBeGreaterThan(1)
     expect(screen.getByText("July 2026")).toBeVisible()
@@ -130,7 +130,7 @@ describe("Figma clean-room detail routes", () => {
     expect(screen.getByText("TEST(CH)")).toBeVisible()
     expect(screen.getByText("Custom Earn #CUSTOM0099")).toBeVisible()
     expect(screen.getByText("+777")).toBeVisible()
-    expect(screen.getByText("Review")).toBeVisible()
+    expect(screen.getByText("REVIEW")).toBeVisible()
     expect(screen.queryByText("Today, 04:30 PM")).not.toBeInTheDocument()
 
     cleanup()
@@ -200,6 +200,15 @@ describe("Figma clean-room detail routes", () => {
     expect(await screen.findByRole("heading", { name: "Coupon" })).toBeVisible()
   })
 
+  it("opens Coupon Detail when the Profile coupon action is used", async () => {
+    const user = userEvent.setup()
+    window.location.hash = "#/coupons"
+    render(<FigmaApp />)
+
+    await user.click(await screen.findByRole("button", { name: "Use Now coupon" }))
+    expect(await screen.findByRole("heading", { name: "Coupon Detail" })).toBeVisible()
+  })
+
   it("validates the first Information state and saves the completed second state", async () => {
     const updateProfile = vi.spyOn(memberApi, "updateProfile")
     const user = userEvent.setup()
@@ -215,14 +224,16 @@ describe("Figma clean-room detail routes", () => {
     expect(screen.getByLabelText("Last name")).toHaveValue("H")
     expect(screen.getByRole("button", { name: "Submit" })).toBeDisabled()
 
-    await user.type(screen.getByLabelText("Date of birth"), "June 2020")
+    const birthday = screen.getByLabelText("Date of birth")
+    expect(birthday).toHaveAttribute("type", "month")
+    fireEvent.change(birthday, { target: { value: "2020-06" } })
     await user.type(screen.getByLabelText("Email"), "john.h@mail.com")
     await user.click(screen.getByRole("checkbox", { name: /Receive order updates/ }))
     await user.click(screen.getByRole("button", { name: "Submit" }))
 
     expect(window.location.hash).toBe("#/information/2")
     expect(document.querySelector('[data-figma-node="42:1466"]')).toBeInTheDocument()
-    expect(screen.getByLabelText("Date of birth")).toHaveValue("June 2020")
+    expect(screen.getByLabelText("Date of birth")).toHaveValue("2020-06")
     expect(screen.getByLabelText("Email")).toHaveValue("john.h@mail.com")
     expect(screen.getByTestId("calendar-icon")).toHaveAttribute("alt", "Calendar")
     expect(screen.getByTestId("calendar-icon")).toHaveAttribute("src", calendarAsset)
@@ -230,7 +241,7 @@ describe("Figma clean-room detail routes", () => {
 
     await user.click(screen.getByRole("button", { name: "Back" }))
     expect(window.location.hash).toBe("#/information/1")
-    expect(await screen.findByLabelText("Date of birth")).toHaveValue("June 2020")
+    expect(await screen.findByLabelText("Date of birth")).toHaveValue("2020-06")
     expect(screen.getByLabelText("Email")).toHaveValue("john.h@mail.com")
     await user.click(screen.getByRole("button", { name: "Submit" }))
     expect(window.location.hash).toBe("#/information/2")
@@ -242,13 +253,16 @@ describe("Figma clean-room detail routes", () => {
       birthday: "June 2020",
       email: "john.h@mail.com",
     })
-    expect(await screen.findByRole("heading", { name: "Profile" })).toBeVisible()
+    expect(await screen.findByText("Your visit has been added to your rewards account.")).toBeVisible()
+    expect(window.location.hash).toBe("#/success/instant")
   })
 
   it("uses the Figma geometry and only local clean-room assets", () => {
     expect(detailsCss).toMatch(/\.detail-header-clean\s*\{[\s\S]*?position:\s*sticky;[\s\S]*?top:\s*0;[\s\S]*?height:\s*64px;[\s\S]*?background:\s*#fff/)
     expect(detailsCss).toMatch(/\.detail-content-clean\s*\{[\s\S]*?top:\s*92px;[\s\S]*?right:\s*var\(--gb-inline\);[\s\S]*?width:\s*auto/)
     expect(detailsCss).toMatch(/\.information-submit-clean\s*\{[\s\S]*?height:\s*48px;[\s\S]*?border-radius:\s*9999px/)
+    expect(detailsCss).toMatch(/\.account-member-copy-clean p\s*\{[\s\S]*?font-size:\s*24px;[\s\S]*?line-height:\s*28\.8px/)
+    expect(detailsCss).toMatch(/\.point-status-clean\s*\{[\s\S]*?background:\s*#fef2f2;[\s\S]*?color:\s*#dc2626/)
     expect(detailsCss).toMatch(/\.points-clean\s*\{[\s\S]*?overflow-y:\s*auto;[\s\S]*?scrollbar-width:\s*none/)
     expect(detailsCss).toMatch(/\.points-clean::-webkit-scrollbar\s*\{[\s\S]*?display:\s*none/)
     expect(detailsCss).toMatch(/\.coupon-detail-row-clean:first-child\s*\{\s*height:\s*258px/)

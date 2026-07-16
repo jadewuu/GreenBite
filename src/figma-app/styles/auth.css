@@ -10,8 +10,13 @@
 }
 
 .auth-frame {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: min(100%, 768px);
   height: var(--gb-locked-viewport-height, 100vh);
   min-height: var(--gb-locked-viewport-height, 100vh);
+  transform: translateX(-50%);
 }
 
 .auth-entry-stack {

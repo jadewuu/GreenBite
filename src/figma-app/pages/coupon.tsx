@@ -9,7 +9,6 @@ import { DetailHeader } from "./detail-header"
 
 export function Coupon({ onBack, onOpenCoupon }: { onBack: () => void; onOpenCoupon: (id: string) => void }) {
   const [coupons, setCoupons] = useState<CouponData[] | null>(null)
-  const [used, setUsed] = useState<string[]>([])
 
   useEffect(() => {
     let active = true
@@ -26,15 +25,14 @@ export function Coupon({ onBack, onOpenCoupon }: { onBack: () => void; onOpenCou
       <DetailHeader arrow={couponArrow} onBack={onBack} title="Coupon" />
       <section aria-label="Coupons" className="coupon-list-clean">
         {coupons.slice(0, 5).map((coupon) => {
-          const demoState = used.includes(coupon.id) ? "used" : coupon.state
-          return <CouponRow coupon={coupon} key={coupon.id} onOpen={() => onOpenCoupon(coupon.id)} onUse={() => setUsed((current) => [...current, coupon.id])} state={demoState} />
+          return <CouponRow coupon={coupon} key={coupon.id} onOpen={() => onOpenCoupon(coupon.id)} state={coupon.state} />
         })}
       </section>
     </main>
   )
 }
 
-function CouponRow({ coupon, onOpen, onUse, state }: { coupon: CouponData; onOpen: () => void; onUse: () => void; state: CouponData["state"] }) {
+function CouponRow({ coupon, onOpen, state }: { coupon: CouponData; onOpen: () => void; state: CouponData["state"] }) {
   return (
     <article className={`coupon-detail-row-clean${state === "available" ? "" : " is-muted"}`} data-testid="coupon-row">
       <button aria-label={`View ${coupon.title}`} className="coupon-detail-open-clean" onClick={onOpen} type="button">
@@ -43,7 +41,7 @@ function CouponRow({ coupon, onOpen, onUse, state }: { coupon: CouponData; onOpe
       <div className="coupon-detail-copy-clean">
         <p>{coupon.title}</p>
         <span>{state === "used" ? coupon.usedDescription : coupon.description}</span>
-        {state === "available" && <button aria-label={`${coupon.actionLabel} coupon`} onClick={onUse} type="button">{coupon.actionLabel}</button>}
+        {state === "available" && <button aria-label={`${coupon.actionLabel} coupon`} onClick={onOpen} type="button">{coupon.actionLabel}</button>}
       </div>
     </article>
   )

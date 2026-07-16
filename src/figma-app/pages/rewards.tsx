@@ -18,19 +18,28 @@ import type { Coupon, Member, RewardCatalogItem, RewardsOverview } from "@/lib/a
 
 type RewardsProps = {
   onOpenAccount: () => void
+  onOpenCoupon: (couponId: string) => void
   onOpenMemberCode: () => void
   onOpenPoints: () => void
 }
 
 type RewardTab = "Rewards" | "Coupon"
 
-export function Rewards({ onOpenAccount, onOpenMemberCode, onOpenPoints }: RewardsProps) {
+export function Rewards({ onOpenAccount, onOpenCoupon, onOpenMemberCode, onOpenPoints }: RewardsProps) {
   const [member, setMember] = useState<Member | null>(null)
   const [overview, setOverview] = useState<RewardsOverview | null>(null)
   const [coupons, setCoupons] = useState<Coupon[]>([])
   const [catalog, setCatalog] = useState<RewardCatalogItem[]>([])
   const [activeTab, setActiveTab] = useState<RewardTab>("Rewards")
+  const [claimedCouponIds, setClaimedCouponIds] = useState<string[]>([])
   const [scrolled, setScrolled] = useState(false)
+  const [toast, setToast] = useState("")
+
+  useEffect(() => {
+    if (!toast) return
+    const timer = window.setTimeout(() => setToast(""), 2400)
+    return () => window.clearTimeout(timer)
+  }, [toast])
 
   useEffect(() => {
     void Promise.all([
@@ -48,17 +57,23 @@ export function Rewards({ onOpenAccount, onOpenMemberCode, onOpenPoints }: Rewar
 
   if (!member || !overview) return <main aria-busy="true" className="figma-frame rewards-frame" />
 
+  function claimCoupon(couponId: string) {
+    setClaimedCouponIds((current) => current.includes(couponId) ? current : [...current, couponId])
+    setToast("Coupon claimed successfully.")
+  }
+
   return (
     <main className={`figma-frame rewards-frame${scrolled ? " rewards-scrolled" : ""}`} data-figma-node={scrolled ? "37:7193" : activeTab === "Coupon" ? "73:1507" : "69:1047"} data-testid="rewards-scroll-surface" onScroll={(event) => setScrolled(event.currentTarget.scrollTop > 8)}>
+      <RewardsHeader onOpenAccount={onOpenAccount} />
       <div className="rewards-layout">
-        <RewardsHeader onOpenAccount={onOpenAccount} />
         <MemberSummary member={member} onOpenMemberCode={onOpenMemberCode} onOpenPoints={onOpenPoints} points={overview.points} />
         <HowItWorks compact={activeTab === "Coupon"} />
         <section className="rewards-catalog" aria-label="Rewards and coupon">
           <RewardTabs active={activeTab} onChange={setActiveTab} />
-          {activeTab === "Rewards" ? <RewardItems catalog={catalog} /> : <CouponCards coupons={coupons} />}
+          {activeTab === "Rewards" ? <RewardItems catalog={catalog} /> : <CouponCards claimedCouponIds={claimedCouponIds} coupons={coupons} onClaim={claimCoupon} onOpenCoupon={onOpenCoupon} />}
         </section>
       </div>
+      {toast && <div className="reward-toast-clean" role="status">{toast}</div>}
     </main>
   )
 }
@@ -88,6 +103,11 @@ function RewardItems({ catalog }: { catalog: RewardCatalogItem[] }) {
   return <div aria-label="Rewards" className="reward-items">{catalog.map((item) => <article className="reward-row-clean" key={item.id}><img alt="" className="reward-thumb-clean" src={bubbleTea} /><div className="reward-copy-clean"><p>{item.title}</p><div><span>{item.points} Points</span><span className={item.priceStruck ? "is-struck" : ""}>{item.price}</span></div></div></article>)}</div>
 }
 
-function CouponCards({ coupons }: { coupons: Coupon[] }) {
-  return <div aria-label="Coupons" className="coupon-cards">{coupons.slice(0, 3).map((coupon) => <article className="coupon-card-clean" key={coupon.id}><img alt="" className="coupon-card-image" src={couponFoodHeader} /><div className="coupon-card-copy"><p>{coupon.title}</p><span>{coupon.description.replace("Save $5 on orders of $20 or more.", "Expired on July 12, 04:30 PM")}</span><button aria-label={`${coupon.actionLabel} ${coupon.title}`} type="button">{coupon.actionLabel}</button></div></article>)}</div>
+function CouponCards({ claimedCouponIds, coupons, onClaim, onOpenCoupon }: { claimedCouponIds: string[]; coupons: Coupon[]; onClaim: (couponId: string) => void; onOpenCoupon: (couponId: string) => void }) {
+  return <div aria-label="Coupons" className="coupon-cards">{coupons.slice(0, 3).map((coupon) => {
+    const claimed = claimedCouponIds.includes(coupon.id)
+    const label = claimed ? "Use Now" : coupon.actionLabel
+    const openCoupon = claimed || coupon.actionLabel !== "Claim"
+    return <article className="coupon-card-clean" key={coupon.id}><img alt="" className="coupon-card-image" src={couponFoodHeader} /><div className="coupon-card-copy"><p>{coupon.title}</p><span>{coupon.description.replace("Save $5 on orders of $20 or more.", "Expired on July 12, 04:30 PM")}</span><button aria-label={`${label} ${coupon.title}`} onClick={() => openCoupon ? onOpenCoupon(coupon.id) : onClaim(coupon.id)} type="button">{label}</button></div></article>
+  })}</div>
 }

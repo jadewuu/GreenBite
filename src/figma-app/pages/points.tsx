@@ -56,8 +56,8 @@ function PointRow({ row }: { row: PointActivity }) {
     <article className="point-row-clean" data-testid="point-row">
       <div className="point-meta-clean">
         <span>{row.displayDate}</span>
-        {row.status && <em>{row.status}</em>}
-        <span>{row.channel}</span>
+        {row.status && <span className="point-status-clean">{row.status.toUpperCase()}</span>}
+        <span className="point-channel-clean">{row.channel}</span>
       </div>
       <div className="point-value-clean">
         <span>{row.label} #{row.orderId}</span>

@@ -56,7 +56,7 @@ describe("latest Figma rewards flow", () => {
     expect(screen.getByText("How it works")).toBeInTheDocument()
   })
 
-  it("opens the member card and keeps the demo rewards screen visible after Claim", async () => {
+  it("claims a coupon, confirms it with a toast, and opens its details", async () => {
     const user = userEvent.setup()
     render(<FigmaApp />)
     await user.click(await screen.findByRole("button", { name: "Show Member Code" }))
@@ -64,8 +64,9 @@ describe("latest Figma rewards flow", () => {
     await user.click(screen.getByRole("button", { name: "Close member code" }))
     await user.click(await screen.findByRole("tab", { name: "Coupon" }))
     await user.click(screen.getByRole("button", { name: "Claim Spend $20, Save $5" }))
-    expect(screen.getByText("Spend $20, Save $5")).toBeVisible()
-    expect(document.querySelector('[data-figma-node="37:6532"]')).not.toBeInTheDocument()
+    expect(screen.getByRole("status")).toHaveTextContent("Coupon claimed successfully.")
+    await user.click(screen.getByRole("button", { name: "Use Now Spend $20, Save $5" }))
+    expect(await screen.findByRole("heading", { name: "Coupon Detail" })).toBeVisible()
   })
 
   it("uses the exact two-tab layout and 44px account target", () => {
@@ -74,7 +75,7 @@ describe("latest Figma rewards flow", () => {
     expect(rewardsCss).toMatch(/\.rewards-account-button\s*\{[\s\S]*?width:\s*44px;[\s\S]*?height:\s*44px/)
     expect(rewardsCss).toMatch(/\.how-it-works\s*\{[\s\S]*?border-radius:\s*16px/)
     expect(rewardsCss).toMatch(/\.rewards-frame\s*\{[\s\S]*?height:\s*100dvh;[\s\S]*?overflow-y:\s*auto/)
-    expect(rewardsCss).toMatch(/\.rewards-header\s*\{[\s\S]*?position:\s*sticky;[\s\S]*?top:\s*32px/)
+    expect(rewardsCss).toMatch(/\.rewards-header\s*\{[\s\S]*?position:\s*sticky;[\s\S]*?top:\s*0;[\s\S]*?height:\s*64px;[\s\S]*?background:\s*#fff/)
     expect(rewardsCss).toMatch(/\.member-code-clean > header\s*\{[\s\S]*?top:\s*0;[\s\S]*?height:\s*64px/)
     expect(rewardsCss).toMatch(/\.member-close-clean\s*\{[\s\S]*?width:\s*34px;[\s\S]*?height:\s*44px/)
   })

@@ -19,7 +19,7 @@ beforeEach(() => {
 })
 
 describe("Figma clean-room authentication flow", () => {
-  it("moves from the landing frame through phone verification to rewards", async () => {
+  it("moves from the landing frame through phone verification to information completion", async () => {
     const user = userEvent.setup()
     render(<FigmaApp />)
 
@@ -37,12 +37,8 @@ describe("Figma clean-room authentication flow", () => {
     expect(screen.getByText(/sent to \(408\) 888-1234/)).toBeVisible()
     await user.type(screen.getAllByLabelText("Verification digit")[0], "123456")
 
-    expect(await screen.findByText("You earned 28 points")).toBeVisible()
-    expect(screen.getByText("Purchase #ORD00123456")).toBeVisible()
-    expect(screen.getByText("Points will appear in your account within 48 hours")).toBeVisible()
-
-    await user.click(screen.getByRole("button", { name: "View Rewards" }))
-    expect(document.querySelector('[data-figma-node="69:1047"]')).toBeInTheDocument()
+    expect(await screen.findByRole("heading", { name: "Information" })).toBeVisible()
+    expect(window.location.hash).toBe("#/information/1")
   })
 
   it("restores the formatted phone number when returning from verification", async () => {
@@ -85,7 +81,7 @@ describe("Figma clean-room authentication flow", () => {
     otp.forEach((input) => expect(input).toHaveValue(""))
 
     await user.type(otp[0], "123456")
-    expect(await screen.findByText("You earned 28 points")).toBeVisible()
+    expect(await screen.findByRole("heading", { name: "Information" })).toBeVisible()
   })
 
   it("clears verification state and confirms a resend", () => {
@@ -138,6 +134,7 @@ describe("Figma clean-room authentication flow", () => {
     expect(authCss).toMatch(/\.auth-back\s*\{[\s\S]*?min-width:\s*44px/)
     expect(authCss).toMatch(/\.resend-button\s*\{[\s\S]*?min-height:\s*44px/)
     expect(authCss).toMatch(/\.auth-frame\s*\{[\s\S]*?height:\s*var\(--gb-locked-viewport-height,\s*100vh\)/)
+    expect(authCss).toMatch(/\.auth-frame\s*\{[\s\S]*?position:\s*fixed;[\s\S]*?top:\s*0;[\s\S]*?width:\s*min\(100%,\s*768px\)/)
     expect(authCss).toMatch(/\.auth-entry-stack\s*\{[\s\S]*?padding:\s*20px/)
     expect(tokensCss).toMatch(/\.figma-app\s*\{[\s\S]*?width:\s*min\(100%,\s*768px\)/)
     expect(tokensCss).toMatch(/overscroll-behavior-y:\s*none/)

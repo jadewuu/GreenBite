@@ -29,6 +29,19 @@ const completeDraft: InformationDraft = {
   marketing: true,
 }
 
+function toMonthValue(birthday: string) {
+  if (/^\d{4}-\d{2}/.test(birthday)) return birthday.slice(0, 7)
+  const date = new Date(`${birthday} 1`)
+  if (Number.isNaN(date.getTime())) return ""
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`
+}
+
+function toBirthdayLabel(monthValue: string) {
+  const [year, month] = monthValue.split("-").map(Number)
+  if (!year || !month) return ""
+  return new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" }).format(new Date(year, month - 1, 1))
+}
+
 export function Information({ draft, onBack, onContinue, onSaved, step }: InformationProps) {
   const [member, setMember] = useState<Member | null>(null)
   const [form, setForm] = useState<InformationDraft | null>(null)
@@ -87,7 +100,7 @@ export function Information({ draft, onBack, onContinue, onSaved, step }: Inform
         </div>
         <label className="information-field-clean">
           <span>Date of Birth</span>
-          <span className="information-input-shell-clean"><input aria-label="Date of birth" onChange={(event) => update("birthday", event.target.value)} placeholder="Month Year" value={form.birthday} /><img alt="Calendar" data-testid="calendar-icon" src={calendarIcon} /></span>
+          <span className="information-input-shell-clean"><input aria-label="Date of birth" onChange={(event) => update("birthday", toBirthdayLabel(event.target.value))} type="month" value={toMonthValue(form.birthday)} /><img alt="Calendar" data-testid="calendar-icon" src={calendarIcon} /></span>
         </label>
         <label className="information-field-clean">
           <span>Email</span>

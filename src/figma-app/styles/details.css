@@ -88,10 +88,10 @@
 }
 
 .account-member-copy-clean p {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
-  line-height: 24px;
-  letter-spacing: .1px;
+  line-height: 28.8px;
+  letter-spacing: -1px;
 }
 
 .account-member-copy-clean span {
@@ -317,11 +317,22 @@
   letter-spacing: .3px;
 }
 
-.point-meta-clean em {
-  min-width: 0;
-  flex: 1;
+.point-status-clean {
+  display: inline-flex;
+  padding: 2px 8px;
+  border-radius: 8px;
   color: #dc2626;
-  font-style: normal;
+  background: #fef2f2;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: .3px;
+}
+
+.point-channel-clean {
+  min-width: 0;
+  margin-left: auto;
+  color: #4a524c;
 }
 
 .point-value-clean {
