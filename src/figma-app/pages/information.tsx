@@ -16,7 +16,6 @@ export type InformationDraft = ProfileInput & { marketing: boolean }
 type InformationProps = {
   draft?: InformationDraft
   onBack: (draft: InformationDraft) => void
-  onContinue: (draft: InformationDraft) => void
   onSaved: () => void
   step: "1" | "2"
 }
@@ -24,27 +23,41 @@ type InformationProps = {
 const completeDraft: InformationDraft = {
   firstName: "John",
   lastName: "H",
-  birthday: "2020-06",
+  birthday: "June 2020",
   email: "john.h@mail.com",
   marketing: true,
 }
 
+const dateLocales: Record<Member["language"], string> = { en: "en-US", es: "es-ES", zh: "zh-CN" }
+
+function monthNames(language: Member["language"]) {
+  return Array.from({ length: 12 }, (_, index) => new Intl.DateTimeFormat(dateLocales[language], { month: "long" }).format(new Date(2000, index, 1)))
+}
+
 function toMonthValue(birthday: string) {
   if (/^\d{4}-\d{2}/.test(birthday)) return birthday.slice(0, 7)
-  const date = new Date(`${birthday} 1`)
-  if (Number.isNaN(date.getTime())) return ""
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`
+  const year = birthday.match(/\d{4}/)?.[0]
+  if (!year) return ""
+  const normalized = birthday.toLocaleLowerCase().replace(/\s/g, "")
+  const monthIndex = (["en", "es", "zh"] as const).flatMap((language) => monthNames(language)).findIndex((month) => normalized.includes(month.toLocaleLowerCase().replace(/\s/g, "")))
+  return monthIndex < 0 ? "" : `${year}-${String((monthIndex % 12) + 1).padStart(2, "0")}`
 }
 
-function toBirthdayLabel(monthValue: string) {
+function toBirthdayLabel(monthValue: string, language: Member["language"]) {
   const [year, month] = monthValue.split("-").map(Number)
   if (!year || !month) return ""
-  return new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" }).format(new Date(year, month - 1, 1))
+  return new Intl.DateTimeFormat(dateLocales[language], { month: "long", year: "numeric" }).format(new Date(year, month - 1, 1))
 }
 
-export function Information({ draft, onBack, onContinue, onSaved, step }: InformationProps) {
+export function Information({ draft, onBack, onSaved, step }: InformationProps) {
   const [member, setMember] = useState<Member | null>(null)
   const [form, setForm] = useState<InformationDraft | null>(null)
+  const [birthdayText, setBirthdayText] = useState("")
+  const [focusedField, setFocusedField] = useState<"firstName" | null>(null)
+  const [pickerOpen, setPickerOpen] = useState(false)
+  const [pickerMonth, setPickerMonth] = useState("01")
+  const [pickerYear, setPickerYear] = useState(String(new Date().getFullYear()))
+  const [showValidation, setShowValidation] = useState(false)
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
@@ -52,16 +65,20 @@ export function Information({ draft, onBack, onContinue, onSaved, step }: Inform
     void memberApi.getCurrent().then((nextMember) => {
       if (!active) return
       setMember(nextMember)
-      if (draft) setForm({ ...draft, birthday: toMonthValue(draft.birthday) })
-      else if (step === "2") setForm(completeDraft)
-      else setForm({ firstName: nextMember.firstName, lastName: nextMember.lastName.charAt(0), birthday: "", email: "", marketing: false })
+      const nextForm = draft ? { ...draft, birthday: toMonthValue(draft.birthday) } : step === "2" ? { ...completeDraft, birthday: toMonthValue(completeDraft.birthday) } : { firstName: nextMember.firstName, lastName: nextMember.lastName.charAt(0), birthday: "", email: "", marketing: false }
+      setForm(nextForm)
+      setBirthdayText(toBirthdayLabel(nextForm.birthday, nextMember.language))
+      const [year, month] = (nextForm.birthday || `${new Date().getFullYear()}-01`).split("-")
+      setPickerYear(year)
+      setPickerMonth(month)
     })
     return () => { active = false }
   }, [draft, step])
 
   if (!member || !form) return <main aria-busy="true" className="figma-frame detail-frame-clean" />
 
-  const valid = Boolean(form.firstName.trim() && form.lastName.trim() && form.birthday.trim() && /^\S+@\S+\.\S+$/.test(form.email) && form.marketing)
+  const language = member.language
+  const valid = Boolean(form.firstName.trim() && form.lastName.trim() && toMonthValue(form.birthday) && (!form.email || /^\S+@\S+\.\S+$/.test(form.email)))
 
   function update<K extends keyof InformationDraft>(field: K, value: InformationDraft[K]) {
     setForm((current) => current ? { ...current, [field]: value } : current)
@@ -69,14 +86,26 @@ export function Information({ draft, onBack, onContinue, onSaved, step }: Inform
 
   async function submit() {
     const submitted = form
-    if (!submitted || !valid || saving) return
-    if (step === "1") {
-      onContinue(submitted)
+    if (!submitted || saving) return
+    if (!valid) {
+      setShowValidation(true)
       return
     }
     setSaving(true)
-    await memberApi.updateProfile({ firstName: submitted.firstName, lastName: submitted.lastName, birthday: toBirthdayLabel(submitted.birthday), email: submitted.email })
+    await memberApi.updateProfile({ firstName: submitted.firstName, lastName: submitted.lastName, birthday: toBirthdayLabel(submitted.birthday, language), email: submitted.email })
     onSaved()
+  }
+
+  function chooseBirthday() {
+    const monthValue = `${pickerYear}-${pickerMonth}`
+    update("birthday", monthValue)
+    setBirthdayText(toBirthdayLabel(monthValue, language))
+    setPickerOpen(false)
+  }
+
+  function updateBirthday(value: string) {
+    setBirthdayText(value)
+    update("birthday", toMonthValue(value))
   }
 
   return (
@@ -91,19 +120,20 @@ export function Information({ draft, onBack, onContinue, onSaved, step }: Inform
         <div className="information-name-clean">
           <label className="information-field-clean">
             <span>Name</span>
-            <span className="information-input-shell-clean"><input aria-label="First name" autoFocus={step === "1"} onChange={(event) => update("firstName", event.target.value)} value={form.firstName} />{step === "1" && form.firstName && <button aria-label="Clear first name" onClick={() => update("firstName", "")} type="button"><img alt="" src={clearIcon} /></button>}</span>
+            <span className="information-input-shell-clean"><input aria-label="First name" autoFocus={step === "1"} onBlur={() => setFocusedField(null)} onChange={(event) => update("firstName", event.target.value)} onFocus={() => setFocusedField("firstName")} value={form.firstName} />{focusedField === "firstName" && form.firstName && <button aria-label="Clear first name" onClick={() => update("firstName", "")} onMouseDown={(event) => event.preventDefault()} type="button"><img alt="" src={clearIcon} /></button>}</span>
           </label>
           <label className="information-field-clean">
             <span aria-hidden="true">&nbsp;</span>
             <span className="information-input-shell-clean"><input aria-label="Last name" onChange={(event) => update("lastName", event.target.value)} value={form.lastName} /></span>
           </label>
         </div>
-        <label className="information-field-clean">
+        <label className="information-field-clean information-date-field-clean">
           <span>Date of Birth</span>
-          <span className="information-input-shell-clean"><input aria-label="Date of birth" onChange={(event) => update("birthday", event.target.value)} type="month" value={form.birthday} /><img alt="Calendar" data-testid="calendar-icon" src={calendarIcon} /></span>
+          <span className="information-input-shell-clean"><input aria-label="Date of birth" onChange={(event) => updateBirthday(event.target.value)} placeholder="Month Year" value={birthdayText} /><button aria-label="Choose date of birth" onClick={() => setPickerOpen(true)} type="button"><img alt="Calendar" data-testid="calendar-icon" src={calendarIcon} /></button></span>
+          {pickerOpen && <div aria-label="Date of birth picker" className="birthday-picker-clean" role="dialog"><p>{toBirthdayLabel(`${pickerYear}-${pickerMonth}`, member.language)}</p><div><span>Month<select aria-label="Birth month" onChange={(event) => setPickerMonth(event.target.value)} value={pickerMonth}>{monthNames(member.language).map((month, index) => <option key={month} value={String(index + 1).padStart(2, "0")}>{month}</option>)}</select></span><span>Year<select aria-label="Birth year" onChange={(event) => setPickerYear(event.target.value)} value={pickerYear}>{Array.from({ length: new Date().getFullYear() - 1900 + 1 }, (_, index) => String(new Date().getFullYear() - index)).map((year) => <option key={year} value={year}>{year}</option>)}</select></span></div><button onClick={chooseBirthday} type="button">Apply date</button></div>}
         </label>
         <label className="information-field-clean">
-          <span>Email</span>
+          <span>Email (optional)</span>
           <span className="information-input-shell-clean"><input aria-label="Email" onChange={(event) => update("email", event.target.value)} placeholder="Enter your email" type="email" value={form.email} /></span>
         </label>
         <label className="information-marketing-clean">
@@ -111,7 +141,8 @@ export function Information({ draft, onBack, onContinue, onSaved, step }: Inform
           <span aria-hidden="true" className="information-checkbox-clean">{form.marketing && <img alt="" src={checkIcon} />}</span>
           <span>Receive order updates and exclusive offers via SMS and email</span>
         </label>
-        <button className="information-submit-clean" disabled={!valid || saving} type="submit">Submit</button>
+        {showValidation && !valid && <p className="information-validation-clean" role="alert">Enter your name, date of birth, and a valid email if provided.</p>}
+        <button className="information-submit-clean" disabled={saving} type="submit">Submit</button>
       </form>
     </main>
   )

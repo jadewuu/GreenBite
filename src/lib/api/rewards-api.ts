@@ -26,6 +26,11 @@ const catalog: RewardCatalogItem[] = [
   { id: "reward-3", title: "Roasted Garlic Mushrooms", points: 40, price: "$4.50" },
   { id: "reward-4", title: "Spicy Buffalo Cauliflower Bites", points: 60, price: "$6.75" },
   { id: "reward-5", title: "Honey Glazed Carrot Sticks", points: 55, price: "$5.50" },
+  { id: "reward-6", title: "Garlic Mashed Potatoes", points: 60, price: "$6.00" },
+  { id: "reward-7", title: "Roasted Beet Salad with Feta", points: 45, price: "$5.50" },
+  { id: "reward-8", title: "Crispy Sesame Tofu", points: 50, price: "$5.00" },
+  { id: "reward-9", title: "Miso Glazed Eggplant", points: 55, price: "$5.75" },
+  { id: "reward-10", title: "Chili Lime Corn", points: 35, price: "$4.00" },
 ]
 
 let rewardsState: RewardsState = "available"

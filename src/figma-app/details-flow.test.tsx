@@ -7,7 +7,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { couponsApi } from "@/lib/api/coupons-api"
 import { memberApi } from "@/lib/api/member-api"
 import { rewardsApi } from "@/lib/api/rewards-api"
-import calendarAsset from "@/assets/figma-clean/details/calendar.svg"
 import phoneAsset from "@/assets/figma-clean/details/phone.svg"
 
 import { FigmaApp } from "./app"
@@ -209,7 +208,21 @@ describe("Figma clean-room detail routes", () => {
     expect(await screen.findByRole("heading", { name: "Coupon Detail" })).toBeVisible()
   })
 
-  it("validates the first Information state and saves the completed second state", async () => {
+  it("returns Coupon Detail to the route that opened it", async () => {
+    const user = userEvent.setup()
+    window.location.hash = "#/rewards"
+    render(<FigmaApp />)
+
+    await user.click(await screen.findByRole("tab", { name: "Coupon" }))
+    await user.click(screen.getByRole("button", { name: "Claim Spend $20, Save $5" }))
+    await user.click(screen.getByRole("button", { name: "Use Now Spend $20, Save $5" }))
+    expect(await screen.findByRole("heading", { name: "Coupon Detail" })).toBeVisible()
+    await user.click(screen.getByRole("button", { name: "Close coupon detail" }))
+    expect(await screen.findByRole("tab", { name: "Rewards" })).toBeVisible()
+    expect(window.location.hash).toBe("#/rewards")
+  })
+
+  it("validates Information on submit and continues straight to instant success", async () => {
     const updateProfile = vi.spyOn(memberApi, "updateProfile")
     const user = userEvent.setup()
     window.location.hash = "#/information/1"
@@ -222,39 +235,51 @@ describe("Figma clean-room detail routes", () => {
     expect(screen.getByTestId("phone-icon")).toHaveAttribute("src", phoneAsset)
     expect(screen.getByLabelText("First name")).toHaveValue("John")
     expect(screen.getByLabelText("Last name")).toHaveValue("H")
-    expect(screen.getByRole("button", { name: "Submit" })).toBeDisabled()
+    expect(screen.getByRole("button", { name: "Submit" })).toBeEnabled()
 
     const birthday = screen.getByLabelText("Date of birth")
-    expect(birthday).toHaveAttribute("type", "month")
-    fireEvent.change(birthday, { target: { value: "2020-06" } })
+    expect(birthday).toHaveAttribute("placeholder", "Month Year")
+    fireEvent.change(birthday, { target: { value: "July 1993" } })
     await user.type(screen.getByLabelText("Email"), "john.h@mail.com")
-    await user.click(screen.getByRole("checkbox", { name: /Receive order updates/ }))
     await user.click(screen.getByRole("button", { name: "Submit" }))
 
-    expect(window.location.hash).toBe("#/information/2")
-    expect(document.querySelector('[data-figma-node="42:1466"]')).toBeInTheDocument()
-    expect(screen.getByLabelText("Date of birth")).toHaveValue("2020-06")
-    expect(screen.getByLabelText("Email")).toHaveValue("john.h@mail.com")
-    expect(screen.getByTestId("calendar-icon")).toHaveAttribute("alt", "Calendar")
-    expect(screen.getByTestId("calendar-icon")).toHaveAttribute("src", calendarAsset)
-    expect(screen.getByLabelText("First name")).not.toHaveFocus()
-
-    await user.click(screen.getByRole("button", { name: "Back" }))
-    expect(window.location.hash).toBe("#/information/1")
-    expect(await screen.findByLabelText("Date of birth")).toHaveValue("2020-06")
-    expect(screen.getByLabelText("Email")).toHaveValue("john.h@mail.com")
-    await user.click(screen.getByRole("button", { name: "Submit" }))
-    expect(window.location.hash).toBe("#/information/2")
-
-    await user.click(screen.getByRole("button", { name: "Submit" }))
     expect(updateProfile).toHaveBeenCalledWith({
       firstName: "John",
       lastName: "H",
-      birthday: "June 2020",
+      birthday: "July 1993",
       email: "john.h@mail.com",
     })
     expect(await screen.findByText("Your visit has been added to your rewards account.")).toBeVisible()
     expect(window.location.hash).toBe("#/success/instant")
+  })
+
+  it("shows the clear action only while its populated field is focused and applies a localized birthday", async () => {
+    const user = userEvent.setup()
+    window.location.hash = "#/information/1"
+    render(<FigmaApp />)
+
+    const firstName = await screen.findByLabelText("First name")
+    await user.click(screen.getByLabelText("Last name"))
+    expect(screen.queryByRole("button", { name: "Clear first name" })).not.toBeInTheDocument()
+    await user.click(firstName)
+    expect(screen.getByRole("button", { name: "Clear first name" })).toBeVisible()
+
+    await user.click(screen.getByRole("button", { name: "Choose date of birth" }))
+    expect(screen.getByRole("dialog", { name: "Date of birth picker" })).toBeVisible()
+    await user.selectOptions(screen.getByLabelText("Birth month"), "07")
+    await user.selectOptions(screen.getByLabelText("Birth year"), "1993")
+    await user.click(screen.getByRole("button", { name: "Apply date" }))
+    expect(screen.getByLabelText("Date of birth")).toHaveValue("July 1993")
+
+    await memberApi.setLanguage("zh")
+    cleanup()
+    window.location.hash = "#/information/1"
+    render(<FigmaApp />)
+    await user.click(await screen.findByRole("button", { name: "Choose date of birth" }))
+    await user.selectOptions(screen.getByLabelText("Birth month"), "07")
+    await user.selectOptions(screen.getByLabelText("Birth year"), "1993")
+    await user.click(screen.getByRole("button", { name: "Apply date" }))
+    expect(screen.getByLabelText("Date of birth")).toHaveValue("1993年7月")
   })
 
   it("uses the Figma geometry and only local clean-room assets", () => {

@@ -77,6 +77,8 @@ describe("latest Figma rewards flow", () => {
     expect(rewardsCss).toMatch(/\.rewards-frame\s*\{[\s\S]*?height:\s*100dvh;[\s\S]*?overflow-y:\s*auto/)
     expect(rewardsCss).toMatch(/\.rewards-header\s*\{[\s\S]*?position:\s*sticky;[\s\S]*?top:\s*0;[\s\S]*?height:\s*64px;[\s\S]*?background:\s*#fff/)
     expect(rewardsCss).toMatch(/\.reward-toast-clean\s*\{[\s\S]*?white-space:\s*nowrap/)
+    expect(rewardsCss).toMatch(/\.reward-tabs-clean\s*\{[\s\S]*?position:\s*sticky;[\s\S]*?top:\s*64px/)
+    expect(rewardsCss).toMatch(/\.coupon-card-copy button\.is-claimed\s*\{[\s\S]*?color:\s*#e9efcd;[\s\S]*?background:\s*#060a08/)
     expect(rewardsCss).toMatch(/\.member-code-clean > header\s*\{[\s\S]*?top:\s*0;[\s\S]*?height:\s*64px/)
     expect(rewardsCss).toMatch(/\.member-close-clean\s*\{[\s\S]*?width:\s*34px;[\s\S]*?height:\s*44px/)
   })

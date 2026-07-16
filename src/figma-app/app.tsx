@@ -142,7 +142,7 @@ function CouponDetailRoute() {
   const location = useLocation()
   const navigate = useNavigate()
   const couponId = location.pathname.split("/").at(-1) ?? "coupon-1"
-  return <CouponDetail couponId={couponId} onClose={() => navigate("/coupons", { replace: true })} />
+  return <CouponDetail couponId={couponId} onClose={() => navigate(-1)} />
 }
 
 function InformationRoute({ step }: { step: "1" | "2" }) {
@@ -160,7 +160,6 @@ function InformationRoute({ step }: { step: "1" | "2" }) {
           navigate(-1)
         }
       }}
-      onContinue={(nextDraft) => navigate("/information/2", { state: { draft: nextDraft } })}
       onSaved={() => navigate("/success/instant", { replace: true })}
       step={step}
     />
