@@ -104,7 +104,7 @@
 .landing-frame__hero {
   position: absolute;
   top: var(--gb-hero-top);
-  left: var(--gb-hero-left);
+  right: 0;
   width: var(--gb-hero-width);
   height: var(--gb-hero-height);
   pointer-events: none;

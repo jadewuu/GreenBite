@@ -61,7 +61,7 @@
   --gb-success-copy-width: 184px;
   font-family: "Satoshi", "Helvetica Neue", Arial, sans-serif;
   color: var(--gb-foreground);
-  background: #f4f4f1;
+  background: #fff;
   font-synthesis: none;
   text-rendering: geometricPrecision;
 }
@@ -87,7 +87,7 @@ button {
 }
 
 body {
-  background: #f4f4f1;
+  background: #fff;
 }
 
 .figma-app {
@@ -101,7 +101,7 @@ body {
 .figma-frame {
   position: relative;
   width: 100%;
-  min-height: max(100dvh, 874px);
+  min-height: 100dvh;
   overflow: hidden;
   background: var(--gb-background);
 }

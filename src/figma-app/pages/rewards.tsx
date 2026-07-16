@@ -52,8 +52,8 @@ export function Rewards({ onOpenAccount, onOpenMemberCode, onOpenPoints }: Rewar
     <main className={`figma-frame rewards-frame${scrolled ? " rewards-scrolled" : ""}`} data-figma-node={scrolled ? "37:7193" : activeTab === "Coupon" ? "73:1507" : "69:1047"} data-testid="rewards-scroll-surface" onScroll={(event) => setScrolled(event.currentTarget.scrollTop > 8)}>
       <div className="rewards-layout">
         <RewardsHeader onOpenAccount={onOpenAccount} />
-        {!scrolled && <MemberSummary member={member} onOpenMemberCode={onOpenMemberCode} onOpenPoints={onOpenPoints} points={overview.points} />}
-        {!scrolled && <HowItWorks compact={activeTab === "Coupon"} />}
+        <MemberSummary member={member} onOpenMemberCode={onOpenMemberCode} onOpenPoints={onOpenPoints} points={overview.points} />
+        <HowItWorks compact={activeTab === "Coupon"} />
         <section className="rewards-catalog" aria-label="Rewards and coupon">
           <RewardTabs active={activeTab} onChange={setActiveTab} />
           {activeTab === "Rewards" ? <RewardItems catalog={catalog} /> : <CouponCards coupons={coupons} />}

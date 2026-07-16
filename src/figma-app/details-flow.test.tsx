@@ -247,12 +247,12 @@ describe("Figma clean-room detail routes", () => {
 
   it("uses the Figma geometry and only local clean-room assets", () => {
     expect(detailsCss).toMatch(/\.detail-header-clean\s*\{[\s\S]*?top:\s*32px/)
-    expect(detailsCss).toMatch(/\.detail-content-clean\s*\{[\s\S]*?top:\s*92px;[\s\S]*?width:\s*362px/)
+    expect(detailsCss).toMatch(/\.detail-content-clean\s*\{[\s\S]*?top:\s*92px;[\s\S]*?right:\s*var\(--gb-inline\);[\s\S]*?width:\s*auto/)
     expect(detailsCss).toMatch(/\.information-submit-clean\s*\{[\s\S]*?height:\s*48px;[\s\S]*?border-radius:\s*9999px/)
     expect(detailsCss).toMatch(/\.points-clean\s*\{[\s\S]*?overflow-y:\s*auto;[\s\S]*?scrollbar-width:\s*none/)
     expect(detailsCss).toMatch(/\.points-clean::-webkit-scrollbar\s*\{[\s\S]*?display:\s*none/)
     expect(detailsCss).toMatch(/\.coupon-detail-row-clean:first-child\s*\{\s*height:\s*258px/)
-    expect(detailsCss).toMatch(/\.coupon-detail-hero-clean\s*\{\s*width:\s*362px;\s*height:\s*128px/)
+    expect(detailsCss).toMatch(/\.coupon-detail-hero-clean\s*\{\s*width:\s*100%;\s*height:\s*128px/)
     expect(detailsCss).toMatch(/\[data-figma-node="42:1466"\][\s\S]*?\.information-input-shell-clean:focus-within\s*\{[\s\S]*?border:\s*1px solid #d1d1d1;[\s\S]*?box-shadow:\s*0 1px 2px/)
     expect(phoneSvg).toContain("M5.5 2.66667")
     expect(calendarSvg).toContain("M4.83333 4V1.33333")

@@ -47,13 +47,13 @@ describe("latest Figma rewards flow", () => {
     expect(screen.getByRole("button", { name: "Claim Spend $20, Save $5" })).toBeVisible()
   })
 
-  it("keeps the 37:7193 scrolled state free of summary cards", async () => {
+  it("keeps the 37:7193 scrolled state continuous without removing content", async () => {
     render(<FigmaApp />)
     const surface = await screen.findByTestId("rewards-scroll-surface")
     fireEvent.scroll(surface, { target: { scrollTop: 300 } })
     await waitFor(() => expect(document.querySelector('[data-figma-node="37:7193"]')).toBeInTheDocument())
-    expect(screen.queryByText("Show Member Code")).not.toBeInTheDocument()
-    expect(screen.queryByText("How it works")).not.toBeInTheDocument()
+    expect(screen.getByText("Show Member Code")).toBeInTheDocument()
+    expect(screen.getByText("How it works")).toBeInTheDocument()
   })
 
   it("opens the member card and keeps the demo rewards screen visible after Claim", async () => {
@@ -73,5 +73,7 @@ describe("latest Figma rewards flow", () => {
     expect(rewardsCss).toMatch(/\.reward-tabs-clean button\s*\{[\s\S]*?width:\s*50%/)
     expect(rewardsCss).toMatch(/\.rewards-account-button\s*\{[\s\S]*?width:\s*44px;[\s\S]*?height:\s*44px/)
     expect(rewardsCss).toMatch(/\.how-it-works\s*\{[\s\S]*?border-radius:\s*16px/)
+    expect(rewardsCss).toMatch(/\.rewards-frame\s*\{[\s\S]*?height:\s*100dvh;[\s\S]*?overflow-y:\s*auto/)
+    expect(rewardsCss).toMatch(/\.rewards-header\s*\{[\s\S]*?position:\s*sticky;[\s\S]*?top:\s*32px/)
   })
 })
