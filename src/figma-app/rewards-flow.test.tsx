@@ -47,6 +47,15 @@ describe("latest Figma rewards flow", () => {
     expect(screen.getByRole("button", { name: "Claim Spend $20, Save $5" })).toBeVisible()
   })
 
+  it("does not render an action for the already used second coupon", async () => {
+    const user = userEvent.setup()
+    render(<FigmaApp />)
+    await user.click(await screen.findByRole("tab", { name: "Coupon" }))
+
+    expect(screen.getByText("Used")).toBeVisible()
+    expect(screen.queryByRole("button", { name: /Get 15% Off Entire Order/ })).not.toBeInTheDocument()
+  })
+
   it("keeps the 37:7193 scrolled state continuous without removing content", async () => {
     render(<FigmaApp />)
     const surface = await screen.findByTestId("rewards-scroll-surface")
@@ -70,14 +79,14 @@ describe("latest Figma rewards flow", () => {
   })
 
   it("uses the exact two-tab layout and 44px account target", () => {
-    expect(rewardsCss).toMatch(/\.reward-tabs-clean\s*\{[\s\S]*?height:\s*40px/)
+    expect(rewardsCss).toMatch(/\.reward-tabs-clean\s*\{[\s\S]*?height:\s*56px;[\s\S]*?background:\s*#fff/)
     expect(rewardsCss).toMatch(/\.reward-tabs-clean button\s*\{[\s\S]*?width:\s*50%/)
     expect(rewardsCss).toMatch(/\.rewards-account-button\s*\{[\s\S]*?width:\s*44px;[\s\S]*?height:\s*44px/)
     expect(rewardsCss).toMatch(/\.how-it-works\s*\{[\s\S]*?border-radius:\s*16px/)
     expect(rewardsCss).toMatch(/\.rewards-frame\s*\{[\s\S]*?height:\s*100dvh;[\s\S]*?overflow-y:\s*auto/)
     expect(rewardsCss).toMatch(/\.rewards-header\s*\{[\s\S]*?position:\s*sticky;[\s\S]*?top:\s*0;[\s\S]*?height:\s*64px;[\s\S]*?background:\s*#fff/)
     expect(rewardsCss).toMatch(/\.reward-toast-clean\s*\{[\s\S]*?white-space:\s*nowrap/)
-    expect(rewardsCss).toMatch(/\.reward-tabs-clean\s*\{[\s\S]*?position:\s*sticky;[\s\S]*?top:\s*64px/)
+    expect(rewardsCss).toMatch(/\.reward-tabs-clean\s*\{[\s\S]*?position:\s*sticky;[\s\S]*?top:\s*64px;[\s\S]*?z-index:\s*3/)
     expect(rewardsCss).toMatch(/\.coupon-card-copy button\.is-claimed\s*\{[\s\S]*?color:\s*#e9efcd;[\s\S]*?background:\s*#060a08/)
     expect(rewardsCss).toMatch(/\.member-code-clean > header\s*\{[\s\S]*?top:\s*0;[\s\S]*?height:\s*64px/)
     expect(rewardsCss).toMatch(/\.member-close-clean\s*\{[\s\S]*?width:\s*34px;[\s\S]*?height:\s*44px/)

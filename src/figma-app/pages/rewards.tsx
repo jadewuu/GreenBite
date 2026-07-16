@@ -107,7 +107,7 @@ function CouponCards({ claimedCouponIds, coupons, onClaim, onOpenCoupon }: { cla
   return <div aria-label="Coupons" className="coupon-cards">{coupons.slice(0, 3).map((coupon) => {
     const claimed = claimedCouponIds.includes(coupon.id)
     const label = claimed ? "Use Now" : coupon.actionLabel
-    const openCoupon = claimed || coupon.actionLabel !== "Claim"
-    return <article className="coupon-card-clean" key={coupon.id}><img alt="" className="coupon-card-image" src={couponFoodHeader} /><div className="coupon-card-copy"><p>{coupon.title}</p><span>{coupon.description.replace("Save $5 on orders of $20 or more.", "Expired on July 12, 04:30 PM")}</span><button aria-label={`${label} ${coupon.title}`} className={claimed ? "is-claimed" : ""} onClick={() => openCoupon ? onOpenCoupon(coupon.id) : onClaim(coupon.id)} type="button">{label}</button></div></article>
+    const hasAction = coupon.state === "available" || claimed
+    return <article className="coupon-card-clean" key={coupon.id}><img alt="" className="coupon-card-image" src={couponFoodHeader} /><div className="coupon-card-copy"><p>{coupon.title}</p><span>{coupon.state === "used" ? coupon.usedDescription : coupon.description.replace("Save $5 on orders of $20 or more.", "Expired on July 12, 04:30 PM")}</span>{hasAction && <button aria-label={`${label} ${coupon.title}`} className={claimed ? "is-claimed" : ""} onClick={() => claimed ? onOpenCoupon(coupon.id) : onClaim(coupon.id)} type="button">{label}</button>}</div></article>
   })}</div>
 }

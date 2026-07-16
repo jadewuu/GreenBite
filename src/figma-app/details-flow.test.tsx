@@ -10,6 +10,7 @@ import { rewardsApi } from "@/lib/api/rewards-api"
 import phoneAsset from "@/assets/figma-clean/details/phone.svg"
 
 import { FigmaApp } from "./app"
+import { Information } from "./pages/information"
 
 const detailsCssPath = "src/figma-app/styles/details.css"
 const detailsCss = existsSync(detailsCssPath) ? readFileSync(detailsCssPath, "utf8") : ""
@@ -238,8 +239,8 @@ describe("Figma clean-room detail routes", () => {
     expect(screen.getByRole("button", { name: "Submit" })).toBeEnabled()
 
     const birthday = screen.getByLabelText("Date of birth")
-    expect(birthday).toHaveAttribute("placeholder", "Month Year")
-    fireEvent.change(birthday, { target: { value: "July 1993" } })
+    expect(birthday).toHaveAttribute("type", "month")
+    fireEvent.change(birthday, { target: { value: "1993-07" } })
     await user.type(screen.getByLabelText("Email"), "john.h@mail.com")
     await user.click(screen.getByRole("button", { name: "Submit" }))
 
@@ -253,7 +254,7 @@ describe("Figma clean-room detail routes", () => {
     expect(window.location.hash).toBe("#/success/instant")
   })
 
-  it("shows the clear action only while its populated field is focused and applies a localized birthday", async () => {
+  it("shows the clear action only while its populated field is focused and uses the native month picker", async () => {
     const user = userEvent.setup()
     window.location.hash = "#/information/1"
     render(<FigmaApp />)
@@ -264,22 +265,26 @@ describe("Figma clean-room detail routes", () => {
     await user.click(firstName)
     expect(screen.getByRole("button", { name: "Clear first name" })).toBeVisible()
 
-    await user.click(screen.getByRole("button", { name: "Choose date of birth" }))
-    expect(screen.getByRole("dialog", { name: "Date of birth picker" })).toBeVisible()
-    await user.selectOptions(screen.getByLabelText("Birth month"), "07")
-    await user.selectOptions(screen.getByLabelText("Birth year"), "1993")
-    await user.click(screen.getByRole("button", { name: "Apply date" }))
-    expect(screen.getByLabelText("Date of birth")).toHaveValue("July 1993")
+    const birthday = screen.getByLabelText("Date of birth")
+    expect(birthday).toHaveAttribute("type", "month")
+    expect(birthday).toHaveAttribute("lang", "en-US")
+    expect(screen.queryByRole("button", { name: "Choose date of birth" })).not.toBeInTheDocument()
+    fireEvent.change(birthday, { target: { value: "2026-07" } })
+    expect(birthday).toHaveValue("2026-07")
+  })
 
+  it("preserves the localized month label when the native picker is used", async () => {
+    const updateProfile = vi.spyOn(memberApi, "updateProfile")
+    const user = userEvent.setup()
     await memberApi.setLanguage("zh")
-    cleanup()
-    window.location.hash = "#/information/1"
-    render(<FigmaApp />)
-    await user.click(await screen.findByRole("button", { name: "Choose date of birth" }))
-    await user.selectOptions(screen.getByLabelText("Birth month"), "07")
-    await user.selectOptions(screen.getByLabelText("Birth year"), "1993")
-    await user.click(screen.getByRole("button", { name: "Apply date" }))
-    expect(screen.getByLabelText("Date of birth")).toHaveValue("1993年7月")
+    render(<Information draft={{ firstName: "John", lastName: "H", birthday: "1993年7月", email: "", marketing: false }} onBack={() => {}} onSaved={() => {}} step="1" />)
+
+    const birthday = await screen.findByLabelText("Date of birth")
+    expect(birthday).toHaveAttribute("lang", "zh-CN")
+    expect(birthday).toHaveValue("1993-07")
+    await user.click(screen.getByRole("button", { name: "Submit" }))
+
+    expect(updateProfile).toHaveBeenCalledWith(expect.objectContaining({ birthday: "1993年7月" }))
   })
 
   it("uses the Figma geometry and only local clean-room assets", () => {

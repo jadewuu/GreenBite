@@ -54,6 +54,26 @@ describe("Figma clean-room authentication flow", () => {
     expect(screen.getByLabelText("Phone number")).toHaveValue("(408) 888-1234")
   })
 
+  it("keeps the locked viewport height while routing from phone to verification and information", async () => {
+    const previousHeight = window.innerHeight
+    Object.defineProperty(window, "innerHeight", { configurable: true, value: 874 })
+    const user = userEvent.setup()
+    window.location.hash = "#/login"
+    render(<FigmaApp />)
+
+    window.dispatchEvent(new Event("orientationchange"))
+    expect(document.documentElement.style.getPropertyValue("--gb-locked-viewport-height")).toBe("874px")
+    Object.defineProperty(window, "innerHeight", { configurable: true, value: 520 })
+    await user.type(screen.getByLabelText("Phone number"), "4088881234")
+    await user.click(screen.getByRole("button", { name: "Continue" }))
+    expect(document.documentElement.style.getPropertyValue("--gb-locked-viewport-height")).toBe("874px")
+    await user.type(screen.getAllByLabelText("Verification digit")[0], "123456")
+    expect(await screen.findByRole("heading", { name: "Information" })).toBeVisible()
+    expect(document.documentElement.style.getPropertyValue("--gb-locked-viewport-height")).toBe("874px")
+
+    Object.defineProperty(window, "innerHeight", { configurable: true, value: previousHeight })
+  })
+
   it("only enables Continue for ten valid digits", async () => {
     const user = userEvent.setup()
     render(<FigmaApp />)
