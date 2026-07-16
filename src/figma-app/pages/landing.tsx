@@ -49,7 +49,6 @@ export function Landing({ onLogin }: LandingProps) {
         </section>
         <div className="landing-actions">
           <button className="auth-button auth-button--primary" type="button" onClick={onLogin}>Join Rewards</button>
-          <p className="landing-time">Take less than 30 seconds</p>
         </div>
       </div>
     </main>

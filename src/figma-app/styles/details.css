@@ -529,6 +529,7 @@
   width: 16px;
   height: 16px;
   flex: 0 0 16px;
+  pointer-events: none;
 }
 
 .information-input-shell-clean input {

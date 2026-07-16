@@ -24,7 +24,7 @@ type InformationProps = {
 const completeDraft: InformationDraft = {
   firstName: "John",
   lastName: "H",
-  birthday: "June 2020",
+  birthday: "2020-06",
   email: "john.h@mail.com",
   marketing: true,
 }
@@ -52,7 +52,7 @@ export function Information({ draft, onBack, onContinue, onSaved, step }: Inform
     void memberApi.getCurrent().then((nextMember) => {
       if (!active) return
       setMember(nextMember)
-      if (draft) setForm(draft)
+      if (draft) setForm({ ...draft, birthday: toMonthValue(draft.birthday) })
       else if (step === "2") setForm(completeDraft)
       else setForm({ firstName: nextMember.firstName, lastName: nextMember.lastName.charAt(0), birthday: "", email: "", marketing: false })
     })
@@ -75,7 +75,7 @@ export function Information({ draft, onBack, onContinue, onSaved, step }: Inform
       return
     }
     setSaving(true)
-    await memberApi.updateProfile({ firstName: submitted.firstName, lastName: submitted.lastName, birthday: submitted.birthday, email: submitted.email })
+    await memberApi.updateProfile({ firstName: submitted.firstName, lastName: submitted.lastName, birthday: toBirthdayLabel(submitted.birthday), email: submitted.email })
     onSaved()
   }
 
@@ -100,7 +100,7 @@ export function Information({ draft, onBack, onContinue, onSaved, step }: Inform
         </div>
         <label className="information-field-clean">
           <span>Date of Birth</span>
-          <span className="information-input-shell-clean"><input aria-label="Date of birth" onChange={(event) => update("birthday", toBirthdayLabel(event.target.value))} type="month" value={toMonthValue(form.birthday)} /><img alt="Calendar" data-testid="calendar-icon" src={calendarIcon} /></span>
+          <span className="information-input-shell-clean"><input aria-label="Date of birth" onChange={(event) => update("birthday", event.target.value)} type="month" value={form.birthday} /><img alt="Calendar" data-testid="calendar-icon" src={calendarIcon} /></span>
         </label>
         <label className="information-field-clean">
           <span>Email</span>

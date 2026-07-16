@@ -157,7 +157,7 @@
   width: 100%;
   flex-direction: column;
   gap: 16px;
-  padding: 24px 0;
+  padding: 8px 0;
 }
 
 .landing-benefit {
@@ -214,16 +214,6 @@
   width: 100%;
   flex-direction: column;
   gap: 16px;
-}
-
-.landing-time {
-  width: 100%;
-  color: var(--gb-muted);
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 18px;
-  text-align: center;
-  letter-spacing: .3px;
 }
 
 .auth-title {

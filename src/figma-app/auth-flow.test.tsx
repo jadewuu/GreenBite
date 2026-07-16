@@ -24,6 +24,7 @@ describe("Figma clean-room authentication flow", () => {
     render(<FigmaApp />)
 
     expect(document.querySelector('[data-figma-node="5:625"]')).toBeInTheDocument()
+    expect(screen.queryByText("Take less than 30 seconds")).not.toBeInTheDocument()
 
     await user.click(screen.getByRole("button", { name: "Join Rewards" }))
     expect(document.querySelector('[data-figma-node="47:836"]')).toBeInTheDocument()
@@ -136,6 +137,7 @@ describe("Figma clean-room authentication flow", () => {
     expect(authCss).toMatch(/\.auth-frame\s*\{[\s\S]*?height:\s*var\(--gb-locked-viewport-height,\s*100vh\)/)
     expect(authCss).toMatch(/\.auth-frame\s*\{[\s\S]*?position:\s*fixed;[\s\S]*?top:\s*0;[\s\S]*?width:\s*min\(100%,\s*768px\)/)
     expect(authCss).toMatch(/\.auth-entry-stack\s*\{[\s\S]*?padding:\s*20px/)
+    expect(authCss).toMatch(/\.landing-benefits\s*\{[\s\S]*?padding:\s*8px\s+0/)
     expect(tokensCss).toMatch(/\.figma-app\s*\{[\s\S]*?width:\s*min\(100%,\s*768px\)/)
     expect(tokensCss).toMatch(/overscroll-behavior-y:\s*none/)
   })
