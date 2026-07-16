@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 import closeIcon from "@/assets/figma-clean/rewards/close.svg"
 import memberEmblem from "@/assets/figma-clean/rewards/member-emblem.svg"
-import memberCodeQr from "@/assets/figma-clean/rewards/member-code-qr.svg"
+import memberCodeQr from "@/assets/figma-clean/rewards/member-code-qr.png"
 import memberWordmark from "@/assets/figma-clean/rewards/member-wordmark.svg"
 import walletClip1 from "@/assets/figma-clean/rewards/wallet-clip-1.svg"
 import walletClip2 from "@/assets/figma-clean/rewards/wallet-clip-2.svg"

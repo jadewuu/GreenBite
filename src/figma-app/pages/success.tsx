@@ -1,6 +1,6 @@
 import badge from "@/assets/figma-clean/auth/badge-check.svg"
-import leftConfetti from "@/assets/figma-clean/auth/success-confetti-left.svg"
-import rightConfetti from "@/assets/figma-clean/auth/success-confetti-right.svg"
+import leftConfetti from "@/assets/figma-clean/auth/success-confetti-left.png"
+import rightConfetti from "@/assets/figma-clean/auth/success-confetti-right.png"
 
 type SuccessProps = {
   variant: "48h" | "instant"

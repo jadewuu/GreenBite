@@ -72,7 +72,7 @@ describe("latest Figma rewards flow", () => {
     render(<FigmaApp />)
     await user.click(await screen.findByRole("button", { name: "Show Member Code" }))
     expect(document.querySelector('[data-figma-node="35:38"]')).toBeInTheDocument()
-    expect(screen.getByTestId("member-code-qr")).toHaveAttribute("src", expect.stringContaining("member-code-qr.svg"))
+    expect(screen.getByTestId("member-code-qr")).toHaveAttribute("src", expect.stringContaining("member-code-qr.png"))
     await user.click(screen.getByRole("button", { name: "Close member code" }))
     await user.click(await screen.findByRole("tab", { name: "Coupon" }))
     await user.click(screen.getByRole("button", { name: "Claim Spend $20, Save $5" }))

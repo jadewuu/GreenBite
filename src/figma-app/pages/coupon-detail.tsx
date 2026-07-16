@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 import closeIcon from "@/assets/figma-clean/rewards/close.svg"
 import couponFood from "@/assets/figma-clean/details/coupon-food.png"
-import couponDetailQr from "@/assets/figma-clean/details/coupon-detail-qr.svg"
+import couponDetailQr from "@/assets/figma-clean/details/coupon-detail-qr.png"
 import { couponsApi } from "@/lib/api/coupons-api"
 import type { Coupon } from "@/lib/api/types"
 
