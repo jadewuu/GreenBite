@@ -137,6 +137,7 @@ describe("Figma clean-room authentication flow", () => {
 
     expect(document.querySelector('[data-figma-node="64:1591"]')).toBeInTheDocument()
     expect(screen.getByText("Your visit has been added to your rewards account.")).toBeVisible()
+    expect(screen.getByTestId("success-confetti-left")).toHaveAttribute("src", expect.stringContaining("success-confetti-left.svg"))
     unmount()
 
     window.location.hash = "#/failed"

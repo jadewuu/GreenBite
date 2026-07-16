@@ -107,15 +107,11 @@
 }
 
 .member-qr-clean {
+  display: block;
   width: clamp(143.3px, 39.801vw, 160px);
   height: clamp(143.3px, 39.801vw, 160px);
   margin-bottom: clamp(-12.5px, -3.4826vw, -11.2px);
-  background-repeat: no-repeat;
-  background-position: clamp(-165.431px, -41.151vw, -148.2px) clamp(-515.091px, -128.1321vw, -461.3px);
-  background-size: clamp(437.7px, 121.5853vw, 488.773px) clamp(947.3px, 263.1231vw, 1057.755px);
-  mask-position: center;
-  mask-repeat: no-repeat;
-  mask-size: 100% 100%;
+  object-fit: cover;
 }
 
 .member-code-number {

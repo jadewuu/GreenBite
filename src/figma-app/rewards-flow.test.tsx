@@ -31,6 +31,7 @@ describe("latest Figma rewards flow", () => {
     expect(screen.getByText("Reward for new register")).toBeVisible()
     expect(screen.getByText("Unlock free rewards")).toBeVisible()
     expect(screen.getByRole("tab", { name: "Rewards" })).toHaveAttribute("aria-selected", "true")
+    expect(document.querySelector(".reward-thumb-clean")).toHaveAttribute("src", expect.stringContaining("images.unsplash.com"))
     expect(getMember).toHaveBeenCalledTimes(1)
     expect(getOverview).toHaveBeenCalledTimes(1)
     expect(listCoupons).toHaveBeenCalledTimes(1)
@@ -45,6 +46,7 @@ describe("latest Figma rewards flow", () => {
     expect(screen.getByText("Earn points every visit")).toBeVisible()
     expect(screen.queryByText("Reward for new register")).not.toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Claim Spend $20, Save $5" })).toBeVisible()
+    expect(document.querySelector(".coupon-card-image")).toHaveAttribute("src", expect.stringContaining("images.unsplash.com"))
   })
 
   it("does not render an action for the already used second coupon", async () => {
@@ -70,6 +72,7 @@ describe("latest Figma rewards flow", () => {
     render(<FigmaApp />)
     await user.click(await screen.findByRole("button", { name: "Show Member Code" }))
     expect(document.querySelector('[data-figma-node="35:38"]')).toBeInTheDocument()
+    expect(screen.getByTestId("member-code-qr")).toHaveAttribute("src", expect.stringContaining("member-code-qr.svg"))
     await user.click(screen.getByRole("button", { name: "Close member code" }))
     await user.click(await screen.findByRole("tab", { name: "Coupon" }))
     await user.click(screen.getByRole("button", { name: "Claim Spend $20, Save $5" }))

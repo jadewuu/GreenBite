@@ -472,7 +472,7 @@
 .coupon-detail-page-content-clean { position: absolute; top: 80px; right: var(--gb-inline); left: var(--gb-inline); width: auto; }
 .coupon-detail-hero-clean { width: 100%; height: 128px; overflow: hidden; border-radius: 16px; }
 .coupon-qr-clean { width: 160px; height: 160px; margin: 16px auto; }
-.coupon-qr-clean svg { display: block; width: 160px; height: 160px; }
+.coupon-qr-clean img { display: block; width: 160px; height: 160px; object-fit: cover; }
 .coupon-detail-page-content-clean h2 { margin: 8px 0 8px; font-size: 24px; font-weight: 700; line-height: 29px; text-align: center; letter-spacing: -1px; }
 .coupon-detail-expiry-clean { margin: 0; color: #4a524c; font-size: 14px; font-weight: 500; line-height: 20px; text-align: center; letter-spacing: .3px; }
 .coupon-detail-page-content-clean hr { height: 1px; padding: 0; margin: 16px 0; border: 0; background: #e2e2e2; }

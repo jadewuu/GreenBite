@@ -2,8 +2,7 @@ import { useEffect, useState } from "react"
 
 import closeIcon from "@/assets/figma-clean/rewards/close.svg"
 import memberEmblem from "@/assets/figma-clean/rewards/member-emblem.svg"
-import qrMask from "@/assets/figma-clean/rewards/member-qr-mask.svg"
-import qrSource from "@/assets/figma-clean/rewards/member-qr-source.jpg"
+import memberCodeQr from "@/assets/figma-clean/rewards/member-code-qr.svg"
 import memberWordmark from "@/assets/figma-clean/rewards/member-wordmark.svg"
 import walletClip1 from "@/assets/figma-clean/rewards/wallet-clip-1.svg"
 import walletClip2 from "@/assets/figma-clean/rewards/wallet-clip-2.svg"
@@ -43,7 +42,7 @@ export function MemberCode({ onClose }: { onClose: () => void }) {
             <div><span>MEMBER NAME</span><strong>{member.firstName} {member.lastName.charAt(0)}.</strong></div>
             <div><span>POINTS</span><strong>{member.points.toLocaleString("en-US")}</strong></div>
           </div>
-          <div className="member-qr-clean" style={{ backgroundImage: `url(${qrSource})`, maskImage: `url(${qrMask})` }} />
+          <img alt="" className="member-qr-clean" data-testid="member-code-qr" src={memberCodeQr} />
           <p className="member-code-number">{member.memberCode}</p>
           <button aria-label="Add to Apple Wallet" className="apple-wallet-clean" onClick={() => setWalletStatus("Added to Apple Wallet for this demo.")} type="button">
             <img alt="" className="wallet-shape" src={walletVector} />

@@ -387,9 +387,9 @@
 
 .success-frame__confetti img {
   position: absolute;
-  top: -98px;
-  width: 402px;
-  height: 869px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   max-width: none;
 }
 
@@ -398,7 +398,7 @@
 }
 
 .success-frame__confetti--right img {
-  left: -251px;
+  left: 0;
 }
 
 .success-stack {
@@ -515,12 +515,12 @@
   }
 
   .success-frame__confetti img {
-    top: -24.3781vw;
-    width: 100vw;
-    height: 216.1692vw;
+    inset: 0;
+    width: 100%;
+    height: 100%;
   }
 
   .success-frame__confetti--right img {
-    left: -62.4378vw;
+    left: 0;
   }
 }

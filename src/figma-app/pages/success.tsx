@@ -1,5 +1,6 @@
 import badge from "@/assets/figma-clean/auth/badge-check.svg"
-import confetti from "@/assets/figma-clean/auth/confetti.png"
+import leftConfetti from "@/assets/figma-clean/auth/success-confetti-left.svg"
+import rightConfetti from "@/assets/figma-clean/auth/success-confetti-right.svg"
 
 type SuccessProps = {
   variant: "48h" | "instant"
@@ -12,8 +13,8 @@ export function Success({ variant, onCheckDetails, onViewRewards }: SuccessProps
 
   return (
     <main className="figma-frame success-frame" data-figma-node={isInstant ? "64:1591" : "5:2952"}>
-      <div className="success-frame__confetti success-frame__confetti--left" aria-hidden="true"><img src={confetti} alt="" /></div>
-      <div className="success-frame__confetti success-frame__confetti--right" aria-hidden="true"><img src={confetti} alt="" /></div>
+      <div className="success-frame__confetti success-frame__confetti--left" aria-hidden="true"><img data-testid="success-confetti-left" src={leftConfetti} alt="" /></div>
+      <div className="success-frame__confetti success-frame__confetti--right" aria-hidden="true"><img src={rightConfetti} alt="" /></div>
       <div className="auth-stack success-stack">
         <img className="success-badge" src={badge} alt="" />
         <h1 className="auth-title success-title">You earned 28 points</h1>

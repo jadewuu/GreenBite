@@ -196,6 +196,7 @@ describe("Figma clean-room detail routes", () => {
     expect(await screen.findByRole("heading", { name: "Coupon Detail" })).toBeVisible()
     expect(document.querySelector('[data-figma-node="66:2870"]')).toBeInTheDocument()
     expect(screen.getByLabelText("Coupon QR code")).toBeVisible()
+    expect(screen.getByTestId("coupon-detail-qr")).toHaveAttribute("src", expect.stringContaining("coupon-detail-qr.svg"))
     await user.click(screen.getByRole("button", { name: "Close coupon detail" }))
     expect(await screen.findByRole("heading", { name: "Coupon" })).toBeVisible()
   })

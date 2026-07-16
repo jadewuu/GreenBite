@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react"
 
 import chevron from "@/assets/figma-clean/rewards/chevron.svg"
-import couponFoodHeader from "@/assets/figma-clean/rewards/coupon-food-header.png"
 import giftIcon from "@/assets/figma-clean/rewards/how-gift.svg"
 import gemIcon from "@/assets/figma-clean/rewards/how-gem.svg"
 import starIcon from "@/assets/figma-clean/rewards/how-star.svg"
 import qrIcon from "@/assets/figma-clean/rewards/qr-icon.svg"
-import bubbleTea from "@/assets/figma-clean/rewards/reward-bubble-tea.png"
 import brandMark from "@/assets/figma-clean/rewards/rewards-brand.svg"
 import panelEmblem from "@/assets/figma-clean/rewards/rewards-emblem.svg"
 import brandWordmark from "@/assets/figma-clean/rewards/rewards-mark.svg"
@@ -24,6 +22,12 @@ type RewardsProps = {
 }
 
 type RewardTab = "Rewards" | "Coupon"
+
+const foodImages = [
+  "https://images.unsplash.com/photo-1769031240699-e15f4818224a?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1680991307226-855ea16a3115?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1659603903007-28c60a54687d?auto=format&fit=crop&w=900&q=80",
+]
 
 export function Rewards({ onOpenAccount, onOpenCoupon, onOpenMemberCode, onOpenPoints }: RewardsProps) {
   const [member, setMember] = useState<Member | null>(null)
@@ -100,14 +104,14 @@ function RewardTabs({ active, onChange }: { active: RewardTab; onChange: (tab: R
 }
 
 function RewardItems({ catalog }: { catalog: RewardCatalogItem[] }) {
-  return <div aria-label="Rewards" className="reward-items">{catalog.map((item) => <article className="reward-row-clean" key={item.id}><img alt="" className="reward-thumb-clean" src={bubbleTea} /><div className="reward-copy-clean"><p>{item.title}</p><div><span>{item.points} Points</span><span className={item.priceStruck ? "is-struck" : ""}>{item.price}</span></div></div></article>)}</div>
+  return <div aria-label="Rewards" className="reward-items">{catalog.map((item, index) => <article className="reward-row-clean" key={item.id}><img alt="" className="reward-thumb-clean" src={foodImages[index % foodImages.length]} /><div className="reward-copy-clean"><p>{item.title}</p><div><span>{item.points} Points</span><span className={item.priceStruck ? "is-struck" : ""}>{item.price}</span></div></div></article>)}</div>
 }
 
 function CouponCards({ claimedCouponIds, coupons, onClaim, onOpenCoupon }: { claimedCouponIds: string[]; coupons: Coupon[]; onClaim: (couponId: string) => void; onOpenCoupon: (couponId: string) => void }) {
-  return <div aria-label="Coupons" className="coupon-cards">{coupons.slice(0, 3).map((coupon) => {
+  return <div aria-label="Coupons" className="coupon-cards">{coupons.slice(0, 3).map((coupon, index) => {
     const claimed = claimedCouponIds.includes(coupon.id)
     const label = claimed ? "Use Now" : coupon.actionLabel
     const hasAction = coupon.state === "available" || claimed
-    return <article className="coupon-card-clean" key={coupon.id}><img alt="" className="coupon-card-image" src={couponFoodHeader} /><div className="coupon-card-copy"><p>{coupon.title}</p><span>{coupon.state === "used" ? coupon.usedDescription : coupon.description.replace("Save $5 on orders of $20 or more.", "Expired on July 12, 04:30 PM")}</span>{hasAction && <button aria-label={`${label} ${coupon.title}`} className={claimed ? "is-claimed" : ""} onClick={() => claimed ? onOpenCoupon(coupon.id) : onClaim(coupon.id)} type="button">{label}</button>}</div></article>
+    return <article className="coupon-card-clean" key={coupon.id}><img alt="" className="coupon-card-image" src={foodImages[(index + 1) % foodImages.length]} /><div className="coupon-card-copy"><p>{coupon.title}</p><span>{coupon.state === "used" ? coupon.usedDescription : coupon.description.replace("Save $5 on orders of $20 or more.", "Expired on July 12, 04:30 PM")}</span>{hasAction && <button aria-label={`${label} ${coupon.title}`} className={claimed ? "is-claimed" : ""} onClick={() => claimed ? onOpenCoupon(coupon.id) : onClaim(coupon.id)} type="button">{label}</button>}</div></article>
   })}</div>
 }
